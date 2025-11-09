@@ -203,12 +203,27 @@ body {
   padding: 3rem 0;
 }
 
-/* --- NEW STYLES for Hero Image --- */
-.hero-image-wrapper {
-  position: relative;
+/* === UPDATED: Style for the link wrapping the image === */
+.photo-link {
+  display: inline-block;
+  border-radius: 50%; /* Match the wrapper */
+  text-decoration: none; /* Remove underline */
+  /* This prevents the hover flicker from the pseudo-element */
+  -webkit-transform: translateZ(0);
+  transform: translateZ(0);
+  /* === NEW: Added perspective and size === */
+  perspective: 1000px;
   width: 250px;
   height: 250px;
   margin-bottom: 2rem;
+}
+
+/* --- UPDATED STYLES for Hero Image --- */
+.hero-image-wrapper {
+  position: relative;
+  /* === UPDATED: Size now 100% to fill .photo-link === */
+  width: 100%;
+  height: 100%;
   border-radius: 50%;
   display: flex;
   justify-content: center;
@@ -219,6 +234,7 @@ body {
     var(--primary-light-bg) 40%,
     transparent 70%
   );
+  cursor: pointer;
 }
 
 /* Outer ring */
@@ -232,6 +248,55 @@ body {
   opacity: 0.5;
   transform: scale(1.08); /* Makes it slightly larger than the image */
 }
+
+/* === NEW: Flip Card Styles === */
+.hero-image-flipper {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transition: transform 0.8s cubic-bezier(0.77, 0, 0.175, 1);
+  transform-style: preserve-3d;
+}
+
+.photo-link:hover .hero-image-flipper {
+  transform: rotateY(180deg);
+}
+
+.hero-image-front,
+.hero-image-back {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  -webkit-backface-visibility: hidden; /* Safari */
+  backface-visibility: hidden;
+  border-radius: 50%; /* Keep the circular shape */
+}
+
+/* .hero-image-front is the .hero-image-wrapper */
+.hero-image-front {
+  transform: rotateY(0deg);
+}
+
+.hero-image-back {
+  transform: rotateY(180deg);
+  /* Reuse existing styles for consistency */
+  background-color: var(--dark-card);
+  border: 2px solid var(--primary);
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.5rem;
+  font-weight: 600;
+
+  /* Match the glow effect from the front */
+  background: radial-gradient(
+    circle,
+    var(--primary-light-bg) 40%,
+    transparent 70%
+  );
+}
+/* === END: Flip Card Styles === */
 
 .hero-profile-pic {
   width: 90%; /* Slightly smaller to fit inside the wrapper's effects */
@@ -248,7 +313,6 @@ body {
   flex-direction: column;
   align-items: center;
 }
-/* --- END NEW STYLES --- */
 
 .hero-section h1 {
   font-size: 3rem; /* 5xl */
@@ -510,11 +574,16 @@ section {
     text-align: left;
   }
 
-  .hero-image-wrapper {
+  /* === NEW: Sizing moved to .photo-link for responsiveness === */
+  .photo-link {
     width: 300px;
     height: 300px;
     margin-bottom: 0;
     margin-right: 3rem; /* Space between image and text */
+    flex-shrink: 0; /* Prevent image from shrinking */
+  }
+
+  .hero-image-wrapper {
     flex-shrink: 0; /* Prevent image from shrinking */
   }
 

@@ -179,7 +179,9 @@ document.addEventListener("DOMContentLoaded", () => {
   // --- END MODIFIED Copy to Clipboard Functionality ---
 
   // --- Demo Modal Functionality ---
-  const allProjectLinks = document.querySelectorAll(".project-links a");
+  const allProjectLinks = document.querySelectorAll(
+    ".project-links a:not(.js-hero-modal-trigger)"
+  );
 
   allProjectLinks.forEach((link) => {
     // Check if it's a "Live Demo" link
@@ -307,6 +309,66 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
   // --- === END Resume Modal Functionality === ---
+
+  // --- === NEW: Hero Modal Functionality === ---
+  const heroModalTrigger = document.querySelector(".js-hero-modal-trigger");
+
+  if (heroModalTrigger) {
+    heroModalTrigger.addEventListener("click", function (e) {
+      // 1. Prevent default behavior
+      e.preventDefault();
+
+      const demoUrl = this.getAttribute("href");
+      if (!demoUrl) return;
+
+      // 2. Create Modal Elements (reusing existing classes)
+      const modalOverlay = document.createElement("div");
+      modalOverlay.className = "demo-modal-overlay";
+
+      const modalContent = document.createElement("div");
+      modalContent.className = "demo-modal-content";
+
+      const modalCloseBtn = document.createElement("button");
+      modalCloseBtn.className = "demo-modal-close-btn";
+      modalCloseBtn.innerHTML = "&times;";
+      modalCloseBtn.setAttribute("aria-label", "Close demo");
+
+      const modalIframe = document.createElement("iframe");
+      modalIframe.className = "demo-modal-iframe";
+      modalIframe.src = demoUrl;
+      modalIframe.title = "Project Demo";
+      modalIframe.setAttribute("frameborder", "0");
+      modalIframe.setAttribute("allowfullscreen", "true");
+
+      // 3. Assemble the modal
+      modalContent.appendChild(modalCloseBtn);
+      modalContent.appendChild(modalIframe);
+      modalOverlay.appendChild(modalContent);
+
+      // 4. Append to body
+      document.body.appendChild(modalOverlay);
+
+      // 5. Show the modal
+      modalOverlay.style.display = "flex";
+      document.body.classList.add("modal-open"); // Prevent body scroll
+
+      // 6. Add Closing Listeners
+      function closeModal() {
+        modalOverlay.remove();
+        document.body.classList.remove("modal-open");
+      }
+
+      modalCloseBtn.addEventListener("click", closeModal);
+
+      modalOverlay.addEventListener("click", (e) => {
+        // Close only if the overlay itself (the background) is clicked
+        if (e.target === modalOverlay) {
+          closeModal();
+        }
+      });
+    });
+  }
+  // --- === END Hero Modal Functionality === ---
 
   // --- Smooth Scrolling for Anchor Links ---
   document.querySelectorAll('a[href^="#"]').forEach((anchor) => {

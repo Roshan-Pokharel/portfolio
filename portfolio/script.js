@@ -241,6 +241,73 @@ document.addEventListener("DOMContentLoaded", () => {
   });
   // --- END Demo Modal Functionality ---
 
+  // --- === NEW: Resume Modal Functionality === ---
+  const resumeButtons = document.querySelectorAll(".js-resume-btn");
+
+  resumeButtons.forEach((button) => {
+    button.addEventListener("click", function (e) {
+      // 1. Prevent default behavior
+      e.preventDefault();
+
+      const resumeUrl = this.getAttribute("href");
+      if (!resumeUrl) return;
+
+      // 2. Create Modal Elements (reusing existing classes)
+      const modalOverlay = document.createElement("div");
+      modalOverlay.className = "demo-modal-overlay";
+
+      const modalContent = document.createElement("div");
+      modalContent.className = "demo-modal-content";
+
+      const modalCloseBtn = document.createElement("button");
+      modalCloseBtn.className = "demo-modal-close-btn";
+      modalCloseBtn.innerHTML = "&times;";
+      modalCloseBtn.setAttribute("aria-label", "Close resume");
+
+      // 3. Create PDF viewer (iframe)
+      const modalIframe = document.createElement("iframe");
+      modalIframe.className = "demo-modal-iframe";
+      modalIframe.src = resumeUrl;
+      modalIframe.title = "Roshan Pokhrel - Resume";
+
+      // 4. Create Download Button
+      const downloadBtn = document.createElement("a");
+      // Use existing button classes + our new helper class
+      downloadBtn.className = "button-primary resume-download-btn";
+      downloadBtn.href = resumeUrl;
+      downloadBtn.textContent = "Download CV";
+      // This attribute tells the browser to download the file
+      downloadBtn.setAttribute("download", "Roshan_Pokhrel_CV.pdf");
+
+      // 5. Assemble the modal
+      modalContent.appendChild(modalCloseBtn);
+      modalContent.appendChild(modalIframe);
+      modalContent.appendChild(downloadBtn); // Add the download button
+      modalOverlay.appendChild(modalContent);
+
+      // 6. Append to body
+      document.body.appendChild(modalOverlay);
+
+      // 7. Show the modal
+      modalOverlay.style.display = "flex";
+      document.body.classList.add("modal-open");
+
+      // 8. Add Closing Listeners
+      function closeModal() {
+        modalOverlay.remove();
+        document.body.classList.remove("modal-open");
+      }
+
+      modalCloseBtn.addEventListener("click", closeModal);
+      modalOverlay.addEventListener("click", (e) => {
+        if (e.target === modalOverlay) {
+          closeModal();
+        }
+      });
+    });
+  });
+  // --- === END Resume Modal Functionality === ---
+
   // --- Smooth Scrolling for Anchor Links ---
   document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
     anchor.addEventListener("click", function (e) {
@@ -289,9 +356,13 @@ document.addEventListener("DOMContentLoaded", () => {
     // Close mobile menu when a link is clicked
     mobileMenu.querySelectorAll("a").forEach((link) => {
       link.addEventListener("click", () => {
-        mobileMenu.style.display = "none";
-        iconMenu.style.display = "block";
-        iconClose.style.display = "none";
+        // Only close if it's NOT the resume button
+        // (which opens a modal, not scrolls)
+        if (!link.classList.contains("js-resume-btn")) {
+          mobileMenu.style.display = "none";
+          iconMenu.style.display = "block";
+          iconClose.style.display = "none";
+        }
       });
     });
   }

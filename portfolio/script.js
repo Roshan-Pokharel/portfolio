@@ -185,7 +185,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   allProjectLinks.forEach((link) => {
     // Check if it's a "Live Demo" link
-    if (link.textContent.trim().toLowerCase() === "live demo") {
+    if (link.textContent.trim().toLowerCase() === "live demo" && !link.classList.contains("external-link")) {
       link.addEventListener("click", function (e) {
         // 1. Prevent default behavior (opening new tab/page)
         e.preventDefault();

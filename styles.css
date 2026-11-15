@@ -1442,6 +1442,12 @@ html.dark .chatbot-modal-container {
   border-bottom-left-radius: 0.25rem;
 }
 
+html.dark .chat-msg-row.bot .chat-msg-content {
+  background-color: #1c1c1e;
+  border-color: #2c2c2e;
+  color: #ffffff;
+}
+
 .chat-msg-content p {
   margin: 0;
 }
@@ -1641,9 +1647,10 @@ html.dark .chatbot-input:focus {
 }
 
 /* ==========================================================================
-   Mobile Screen: Fullscreen Chat Box & Virtual Keyboard Docking
+   Mobile Screen: Fullscreen Chat Box & Theme-Aware Black/White Background
    ========================================================================== */
 @media (max-width: 640px) {
+  /* Default / Light Mode: Pure White Background (#ffffff) */
   .chatbot-modal-overlay {
     padding: 0 !important;
     align-items: stretch !important;
@@ -1654,6 +1661,7 @@ html.dark .chatbot-input:focus {
     width: var(--modal-width, 100vw) !important;
     bottom: auto !important;
     right: auto !important;
+    background-color: #ffffff !important;
     transition: none !important;
   }
 
@@ -1669,6 +1677,7 @@ html.dark .chatbot-input:focus {
     border-radius: 0 !important;
     border: none !important;
     box-shadow: none !important;
+    background-color: #ffffff !important;
     transform: none !important;
   }
 
@@ -1677,6 +1686,8 @@ html.dark .chatbot-input:focus {
   }
 
   .chatbot-header {
+    background-color: #ffffff !important;
+    border-bottom: 1px solid var(--color-line-soft) !important;
     padding-top: max(0.875rem, env(safe-area-inset-top));
     padding-left: max(1rem, env(safe-area-inset-left));
     padding-right: max(1rem, env(safe-area-inset-right));
@@ -1690,14 +1701,31 @@ html.dark .chatbot-input:focus {
     -webkit-overflow-scrolling: touch;
     overscroll-behavior: contain;
     padding: 1rem;
+    background-color: #ffffff !important;
   }
 
   .chatbot-input-wrap {
     flex-shrink: 0;
+    background-color: #ffffff !important;
+    border-top: 1px solid var(--color-line-soft) !important;
     padding: 0.625rem 0.875rem;
     padding-bottom: max(0.625rem, env(safe-area-inset-bottom));
     padding-left: max(0.875rem, env(safe-area-inset-left));
     padding-right: max(0.875rem, env(safe-area-inset-right));
+  }
+
+  .chatbot-input {
+    background-color: #f2f2f7 !important;
+    border: 1px solid #d2d2d7 !important;
+    color: #1d1d1f !important;
+    font-size: 16px !important; /* Strict 16px on mobile guarantees no zoom */
+  }
+
+  .chatbot-reset-btn,
+  .chatbot-close-btn {
+    background-color: #f2f2f7 !important;
+    border: 1px solid #d2d2d7 !important;
+    color: #1d1d1f !important;
   }
 
   /* When virtual keyboard is open, dock flush above keyboard without home indicator gap */
@@ -1705,8 +1733,72 @@ html.dark .chatbot-input:focus {
     padding-bottom: 0.625rem !important;
   }
 
-  .chatbot-input {
-    font-size: 16px !important; /* Strict 16px on mobile guarantees no zoom */
+  /* Dark Mode: Pure Black Background (#000000) based on theme toggle */
+  html.dark .chatbot-modal-overlay {
+    background-color: #000000 !important;
+  }
+
+  html.dark .chatbot-modal-container {
+    background-color: #000000 !important;
+  }
+
+  html.dark .chatbot-header {
+    background-color: #000000 !important;
+    border-bottom: 1px solid #2c2c2e !important;
+  }
+
+  html.dark .chatbot-messages {
+    background-color: #000000 !important;
+  }
+
+  html.dark .chatbot-input-wrap {
+    background-color: #000000 !important;
+    border-top: 1px solid #2c2c2e !important;
+  }
+
+  html.dark .chatbot-input {
+    background-color: #1c1c1e !important;
+    border: 1px solid #38383a !important;
+    color: #ffffff !important;
+  }
+
+  html.dark .chatbot-reset-btn,
+  html.dark .chatbot-close-btn {
+    background-color: #1c1c1e !important;
+    border: 1px solid #38383a !important;
+    color: #a1a1a6 !important;
+  }
+}
+
+/* System Dark Mode Fallback when toggle is unset */
+@media (max-width: 640px) and (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]):not(:has(> head > meta[name="color-scheme"][content="light"])) .chatbot-modal-overlay {
+    background-color: #000000 !important;
+  }
+  :root:not([data-theme="light"]):not(:has(> head > meta[name="color-scheme"][content="light"])) .chatbot-modal-container {
+    background-color: #000000 !important;
+  }
+  :root:not([data-theme="light"]):not(:has(> head > meta[name="color-scheme"][content="light"])) .chatbot-header {
+    background-color: #000000 !important;
+    border-bottom: 1px solid #2c2c2e !important;
+  }
+  :root:not([data-theme="light"]):not(:has(> head > meta[name="color-scheme"][content="light"])) .chatbot-messages {
+    background-color: #000000 !important;
+  }
+  :root:not([data-theme="light"]):not(:has(> head > meta[name="color-scheme"][content="light"])) .chatbot-input-wrap {
+    background-color: #000000 !important;
+    border-top: 1px solid #2c2c2e !important;
+  }
+  :root:not([data-theme="light"]):not(:has(> head > meta[name="color-scheme"][content="light"])) .chatbot-input {
+    background-color: #1c1c1e !important;
+    border: 1px solid #38383a !important;
+    color: #ffffff !important;
+  }
+  :root:not([data-theme="light"]):not(:has(> head > meta[name="color-scheme"][content="light"])) .chatbot-reset-btn,
+  :root:not([data-theme="light"]):not(:has(> head > meta[name="color-scheme"][content="light"])) .chatbot-close-btn {
+    background-color: #1c1c1e !important;
+    border: 1px solid #38383a !important;
+    color: #a1a1a6 !important;
   }
 }
 

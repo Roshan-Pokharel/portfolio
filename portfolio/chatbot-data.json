@@ -1,0 +1,164 @@
+
+{
+ "welcomeMessage": "<p>Hello! I'm <strong>Roshan's Personal Chatbot</strong>.</p><p>I'm here to answer questions about Roshan Pokhrel, his background, hobbies, programming skills, professional experience, projects, education, and future goals.</p><p>You can ask me about <strong>React Native, Full Stack Development, AI, Sawari Saathi, career opportunities, foreign education, PTE, or how to contact Roshan.</strong></p>",
+
+ "fallbackMessage": "<p>I don't have a specific answer to that question yet. However, I can help you learn more about Roshan Pokhrel.</p><p>Try asking about his <strong>technical skills, projects, work experience, hobbies, education, career goals, or Sawari Saathi.</strong></p><p>Contact: <a href=\"mailto:roshanpokhrel890@gmail.com\">roshanpokhrel890@gmail.com</a></p>",
+
+ "qa": [
+ {
+ "category": "Greetings",
+ "keywords": ["hi", "hello", "hey", "namaste", "hola", "greetings", "good morning", "good afternoon", "good evening"],
+ "answer": "<p>Namaste! Welcome to Roshan Pokhrel's personal chatbot.</p><p>I can tell you about his background, programming skills, projects, professional experience, hobbies, and educational journey.</p><p>Feel free to ask me anything!</p>"
+ },
+ {
+ "category": "About Roshan",
+ "keywords": ["who is roshan", "about roshan", "tell me about roshan", "bio", "biography", "profile", "introduce roshan", "who are you", "personal information"],
+ "answer": "<p><strong>Roshan Pokhrel</strong> is a software developer, mobile application developer, technology enthusiast, and entrepreneur from Nepal.</p><p>He completed his <strong>BSc. in Computer Science and Information Technology (BSc. CSIT)</strong> from Butwal Multiple Campus, affiliated with Tribhuvan University.</p><p>He is passionate about building practical technology solutions, developing mobile and web applications, exploring artificial intelligence, and creating digital products.</p><p>He is also involved in building <strong>Sawari Saathi</strong>, a vehicle rental technology platform in Nepal.</p>"
+ },
+ {
+ "category": "Personal Introduction",
+ "keywords": ["self introduction", "introduce yourself", "tell me about yourself", "short introduction", "professional introduction", "personal introduction"],
+ "answer": "<p>Hello! My name is <strong>Roshan Pokhrel</strong>. I am a Computer Science graduate from Nepal with an interest in software engineering, mobile application development, and emerging technologies.</p><p>I enjoy building applications that solve real-world problems. My main project is Sawari Saathi, a vehicle rental platform that connects vehicle owners with renters.</p><p>I continuously explore new technologies, improve my programming skills, and work towards building innovative digital products.</p>"
+ },
+ {
+ "category": "Personal Interests and Personality",
+ "keywords": ["personality", "personal interests", "what motivates roshan", "strengths", "weaknesses", "ambition", "goals", "passion"],
+ "answer": "<p>Roshan is interested in technology, innovation, entrepreneurship, and continuous learning.</p><p>Some of his key interests include:</p><ul><li>Learning new programming technologies.</li><li>Building useful software products.</li><li>Exploring artificial intelligence.</li><li>Solving real-world problems through technology.</li><li>Improving his professional and communication skills.</li><li>Developing his own business ideas.</li></ul><p>His long-term ambition is to become a skilled technology professional and build successful technology-driven businesses.</p>"
+ },
+ {
+ "category": "Interests and Hobbies",
+ "keywords": ["hobby", "hobbies", "interests", "free time", "what does roshan do for fun", "fishing", "drawing", "sketching", "reading", "outdoor activities", "gaming"],
+ "answer": "<p>Beyond programming and professional work, Roshan enjoys several activities.</p><ul><li><strong>Fishing:</strong> Enjoys fishing and spending time outdoors.</li><li><strong>Technology exploration:</strong> Exploring new software, applications, and development tools.</li><li><strong>UI/UX exploration:</strong> Studying modern application interfaces and creative designs.</li><li><strong>Drawing and sketching:</strong> Interested in creative visual activities.</li><li><strong>Learning:</strong> Exploring technical topics and gaining new knowledge.</li></ul><p>His interests combine creativity, technology, and outdoor activities.</p>"
+ },
+ {
+ "category": "Technical Skills",
+ "keywords": ["skills", "technical skills", "tech stack", "technology stack", "programming skills", "technologies", "what can roshan do", "expertise"],
+ "answer": "<p>Roshan has experience working with several technologies across frontend, backend, mobile development, and application deployment.</p><ul><li><strong>Frontend:</strong> React.js, JavaScript, TypeScript, HTML5, CSS3, Tailwind CSS.</li><li><strong>Mobile:</strong> React Native, Expo, Android and iOS development.</li><li><strong>Backend:</strong> Node.js, Express.js, REST APIs.</li><li><strong>Python:</strong> Python, FastAPI.</li><li><strong>Databases:</strong> MongoDB, MySQL, PostgreSQL, Supabase.</li><li><strong>Tools:</strong> Git, GitHub, VS Code, Postman.</li><li><strong>Other:</strong> Google Maps integration, API integration, authentication, cloud deployment, and UI/UX design.</li></ul><p>His strongest practical experience is in web and mobile application development.</p>"
+ },
+ {
+ "category": "Frontend Development",
+ "keywords": ["frontend", "front end", "react", "react js", "javascript", "typescript", "html", "css", "tailwind", "web development"],
+ "answer": "<p>Roshan has experience developing responsive web interfaces using modern frontend technologies.</p><ul><li>React.js for component-based web applications.</li><li>JavaScript and TypeScript for application logic.</li><li>HTML5 and CSS3 for web structure and styling.</li><li>Tailwind CSS for responsive and consistent interfaces.</li><li>API integration and dynamic data rendering.</li><li>Reusable components and responsive UI design.</li></ul><p>He focuses on building clean, functional, and user-friendly interfaces.</p>"
+ },
+ {
+ "category": "Mobile App Development",
+ "keywords": ["mobile development", "mobile app", "android", "ios", "react native", "expo", "application development", "app developer", "app store", "play store", "download app"],
+ "answer": "<p>Mobile application development is one of Roshan's main technical interests and areas of practical experience.</p><p>He uses <strong>React Native and Expo</strong> to develop cross-platform mobile applications for Android and iOS.</p><ul><li>Cross-platform application development.</li><li>Authentication and user management.</li><li>REST API integration.</li><li>Google Maps integration.</li><li>Image uploading and media management.</li><li>Application navigation and state management.</li><li>Production builds and app store publishing.</li></ul><p>His major mobile development project is <strong>Sawari Saathi</strong>, live on both the <a href=\"https://apps.apple.com/np/app/sawari-saathi/id6799164261\" target=\"_blank\">Apple App Store</a> and <a href=\"https://play.google.com/store/apps/details?id=com.rozn.SawariSaathi\" target=\"_blank\">Google Play Store</a>.</p>"
+ },
+ {
+ "category": "Backend Development",
+ "keywords": ["backend", "back end", "node js", "express", "api", "rest api", "server", "authentication", "jwt", "socket io"],
+ "answer": "<p>Roshan is interested in backend engineering and building reliable application services.</p><ul><li>Node.js for server-side JavaScript.</li><li>Express.js for backend application development.</li><li>RESTful API design and integration.</li><li>JWT-based authentication.</li><li>Database integration.</li><li>API testing and debugging.</li><li>Python and FastAPI for backend services.</li></ul><p>He has applied backend development concepts while building his vehicle rental platform and related services.</p>"
+ },
+ {
+ "category": "Python and FastAPI",
+ "keywords": ["python", "fastapi", "python development", "fare calculator", "cost calculator", "machine learning programming"],
+ "answer": "<p>Roshan has explored Python backend development, particularly using FastAPI.</p><p>One practical application is a Python-based fare calculation service for Sawari Saathi.</p><ul><li>FastAPI endpoint development.</li><li>REST API implementation.</li><li>HTTP client integration.</li><li>Data validation using Pydantic.</li><li>Backend service deployment using Ubuntu and systemd.</li></ul><p>This experience helps him explore Python beyond traditional web development.</p>"
+ },
+ {
+ "category": "Database Management",
+ "keywords": ["database", "mongodb", "mysql", "postgresql", "supabase", "sql", "database management", "data storage"],
+ "answer": "<p>Roshan has worked with relational and NoSQL database technologies.</p><ul><li><strong>MongoDB:</strong> Document-oriented database management.</li><li><strong>MySQL:</strong> Relational database concepts and SQL queries.</li><li><strong>PostgreSQL:</strong> Relational data storage and queries.</li><li><strong>Supabase:</strong> Backend services and database integration.</li></ul><p>He understands the importance of database structure, data relationships, and reliable data management in software applications.</p>"
+ },
+ {
+ "category": "Git and GitHub",
+ "keywords": ["github", "git", "version control", "repositories", "open source", "code portfolio", "github portfolio"],
+ "answer": "<p>Roshan uses Git and GitHub as part of his software development workflow.</p><p>Git helps him manage code changes, while GitHub provides a platform for repository hosting and project collaboration.</p><p>GitHub profile: <a href=\"https://github.com/Roshan-Pokharel\" target=\"_blank\">github.com/Roshan-Pokharel</a></p><p>He uses repositories to organize projects, maintain source code, and showcase his technical work.</p>"
+ },
+ {
+ "category": "Artificial Intelligence",
+ "keywords": ["ai", "artificial intelligence", "machine learning", "deep learning", "generative ai", "llm", "chatgpt", "ai engineer"],
+ "answer": "<p>Roshan is interested in artificial intelligence and its applications in modern software development.</p><p>His areas of interest include:</p><ul><li>Artificial Intelligence.</li><li>Machine Learning.</li><li>Deep Learning.</li><li>Generative AI and Large Language Models.</li><li>AI-powered software applications.</li><li>AI agents and automation.</li><li>Computer vision and intelligent systems.</li></ul><p>He aims to strengthen his AI knowledge through further learning, practical projects, and postgraduate education.</p>"
+ },
+ {
+ "category": "Sawari Saathi",
+ "keywords": ["sawari", "saathi", "sawari saathi", "startup", "vehicle rental", "car rental", "bike rental", "vehicle marketplace"],
+ "answer": "<p><strong>Sawari Saathi</strong> is a vehicle rental platform developed to connect vehicle owners with people looking to rent vehicles in Nepal.</p><p>Website: <a href=\"https://www.sawarisaathi.com\" target=\"_blank\">www.sawarisaathi.com</a></p><p>The platform aims to simplify vehicle discovery, rental inquiries, and communication between vehicle owners and renters.</p><p>As its founder and technical contributor, Roshan has been involved in:</p><ul><li>Developing the mobile application using React Native and Expo.</li><li>Building web application interfaces using React.</li><li>Integrating backend APIs.</li><li>Implementing vehicle listing and booking workflows.</li><li>Integrating Google Maps and location services.</li><li>Developing fare calculation services.</li><li>Managing application deployment and infrastructure.</li><li>Improving product design and user experience.</li></ul>"
+ },
+ {
+ "category": "Sawari Saathi Technology",
+ "keywords": ["sawari technology", "sawari tech stack", "sawari backend", "sawari architecture", "how was sawari built", "sawari mobile app"],
+ "answer": "<p>The Sawari Saathi ecosystem uses modern web, mobile, and backend technologies.</p><ul><li><strong>Mobile:</strong> React Native and Expo.</li><li><strong>Web:</strong> React.</li><li><strong>Backend:</strong> Node.js and API services.</li><li><strong>Additional service:</strong> Python and FastAPI fare calculation.</li><li><strong>Database:</strong> Database and Supabase services, depending on the application module.</li><li><strong>Infrastructure:</strong> Linux-based cloud servers and deployment services.</li><li><strong>Integrations:</strong> Google Maps, authentication, and push notifications.</li></ul><p>Roshan has worked on integrating these components into a functioning product ecosystem.</p>"
+ },
+ {
+ "category": "Projects",
+ "keywords": ["projects", "portfolio projects", "apps built", "what has roshan built", "development projects", "work samples", "bheri rmc", "bheri", "rmc", "concrete", "oz tint", "oztint", "tint", "wrap"],
+ "answer": "<p>Roshan's main practical software engineering projects include:</p><ul><li><strong>Sawari Saathi:</strong> Vehicle rental platform with web and cross-platform mobile applications.</li><li><strong>Bheri RMC:</strong> Digital ready-mix concrete platform in western Nepal providing mix design tools and delivery dispatch (<a href=\"https://www.bherirmc.com.np\" target=\"_blank\">bherirmc.com.np</a>).</li><li><strong>Oz Tint &amp; Wrap:</strong> Commercial automotive styling &amp; protection platform in Sydney, Australia (<a href=\"https://www.oztintandwrap.com/\" target=\"_blank\">oztintandwrap.com</a>).</li><li><strong>Fare Calculation Service:</strong> Python and FastAPI-based service for estimating vehicle rental fares using road distance and geographical information.</li><li><strong>Car Rental Mobile App:</strong> Mobile application with real-time vehicle availability and booking flows.</li></ul><p>For more information, visit his <a href=\"https://github.com/Roshan-Pokharel\" target=\"_blank\">GitHub profile</a>.</p>"
+ },
+ {
+ "category": "Work Experience",
+ "keywords": ["experience", "work experience", "professional experience", "job", "career", "employment", "internship", "hubit", "sawari saathi", "2025", "2026"],
+ "answer": "<p>Roshan's professional and startup experience:</p><ul><li><strong>Sawari Saathi Pvt. Ltd. (2026 – Present):</strong> Co-Founder &amp; Full Stack Developer — Leading system architecture, full-stack web and mobile apps with React Native, and live fleet radar operations.</li><li><strong>Hubit Pvt. Ltd. (2025 – 2026):</strong> Full Stack Developer Intern — Engineered responsive web applications, created RESTful APIs, managed database schemas, and collaborated on production features.</li></ul>"
+ },
+ {
+ "category": "Entrepreneurship",
+ "keywords": ["entrepreneur", "entrepreneurship", "business", "startup founder", "company", "business ideas", "startup management"],
+ "answer": "<p>Roshan is interested in entrepreneurship and building technology-based businesses.</p><p>Through Sawari Saathi, he has gained exposure to several startup activities:</p><ul><li>Product planning and development.</li><li>Business model exploration.</li><li>Team coordination.</li><li>Customer experience.</li><li>Technology infrastructure.</li><li>Marketing and product growth.</li><li>Business operations and problem solving.</li></ul><p>He wants to combine technical knowledge with entrepreneurial skills to build useful and scalable products.</p>"
+ },
+ {
+ "category": "Education",
+ "keywords": ["education", "study", "studies", "academic background", "degree", "university", "college", "campus", "bsc", "csit", "tribhuvan university", "butwal multiple campus", "kumudini", "holy care", "see", "+2", "bachelor", "2019", "2020", "2021", "2022", "2026", "gpa", "marks", "grade", "grades"],
+ "answer": "<p>Roshan's complete academic background &amp; timeline:</p><ul><li><strong>Bachelor of Science in Computer Science and Information Technology (BSc. CSIT):</strong> Completed at <em>Butwal Multiple Campus</em>, Tribhuvan University (2022 – 2026). Academic aggregate: ~74.4% (Final-year result: 82%).</li><li><strong>Intermediate (+2) in Science:</strong> Completed at <em>Kumudini College</em> (2020 – 2021) with <strong>3.36 GPA (Grade A)</strong>.</li><li><strong>Secondary Education Examination (SEE):</strong> Passed from <em>Holy Care English Secondary School</em> in 2019 with <strong>3.55 GPA (Grade A)</strong>.</li></ul><p>His academic coursework covers data structures, algorithms, databases, software engineering, physics, and computing principles.</p>"
+ },
+ {
+ "category": "Foreign Education",
+ "keywords": ["study abroad", "foreign education", "masters abroad", "masters degree", "master's", "international education", "study overseas", "overseas study"],
+ "answer": "<p>Roshan is interested in pursuing postgraduate education abroad, particularly in technology-related fields.</p><p>His preferred areas of study include:</p><ul><li>Master of Artificial Intelligence.</li><li>Master of Data Science.</li><li>Master of Computer Science.</li><li>Other technology-related postgraduate programs.</li></ul><p>New Zealand is one of his preferred destinations. He is also interested in comparing universities, admission requirements, scholarships, living expenses, and post-study employment opportunities.</p>"
+ },
+ {
+ "category": "New Zealand Education",
+ "keywords": ["new zealand", "nz", "universities in new zealand", "study in new zealand", "nz masters", "nz scholarship"],
+ "answer": "<p>New Zealand is one of Roshan's preferred destinations for postgraduate studies.</p><p>He is particularly interested in Master's programs in Artificial Intelligence and Data Science.</p><p>Important considerations include:</p><ul><li>Academic eligibility with a BSc. CSIT degree.</li><li>English language requirements.</li><li>University tuition fees.</li><li>Scholarship opportunities.</li><li>Living expenses and accommodation.</li><li>Student visa requirements.</li><li>Post-study work rights and employment opportunities.</li></p>"
+ },
+ {
+ "category": "Academic Eligibility",
+ "keywords": ["eligibility", "academic eligibility", "74 percent", "74.45", "74.38", "bsc csit admission", "masters admission", "admission requirements"],
+ "answer": "<p>Roshan completed a BSc. CSIT degree under Tribhuvan University with an academic result around 74.4%.</p><p>He is interested in understanding his eligibility for Master's programs in Artificial Intelligence, Data Science, and Computer Science.</p><p>Eligibility must be assessed separately for each university based on its official academic criteria, prerequisite subjects, degree equivalency, and English language requirements.</p>"
+ },
+ {
+ "category": "PTE and English Proficiency",
+ "keywords": ["pte", "pte academic", "english proficiency", "pte score", "english test", "ielts", "toefl", "language test"],
+ "answer": "<p>Roshan has taken the PTE Academic examination.</p><ul><li><strong>Overall:</strong> 62</li><li><strong>Listening:</strong> 59</li><li><strong>Reading:</strong> 67</li><li><strong>Speaking:</strong> 57</li><li><strong>Writing:</strong> 67</li></ul><p>He is interested in improving his English proficiency, particularly academic writing, speaking fluency, grammar, and vocabulary.</p><p>His target is to achieve a stronger PTE score to improve his postgraduate study opportunities.</p>"
+ },
+ {
+ "category": "Career Goals",
+ "keywords": ["career goals", "future career", "professional goals", "career path", "future plans", "ambition"],
+ "answer": "<p>Roshan's career interests are focused on technology, software engineering, and entrepreneurship.</p><p>His professional development goals include:</p><ul><li>Becoming a stronger full-stack software developer.</li><li>Improving mobile application development skills.</li><li>Developing knowledge of AI and Data Science.</li><li>Building production-ready software products.</li><li>Gaining international professional exposure.</li><li>Developing successful technology businesses.</li></ul>"
+ },
+ {
+ "category": "Job Opportunities",
+ "keywords": ["jobs", "job opportunities", "software developer job", "developer position", "career opportunities", "remote jobs", "freelancing", "employment"],
+ "answer": "<p>Based on his development background, Roshan can explore opportunities such as:</p><ul><li>Junior Full Stack Developer.</li><li>React Developer.</li><li>React Native Developer.</li><li>Frontend Developer.</li><li>Junior Backend Developer.</li><li>Mobile Application Developer.</li><li>Software Developer Intern.</li></ul><p>Suitable positions depend on the specific job requirements, his portfolio, and demonstrated technical ability.</p>"
+ },
+ {
+ "category": "Technical Interview Preparation",
+ "keywords": ["interview", "technical interview", "coding interview", "javascript interview", "react interview", "programming questions", "hr interview"],
+ "answer": "<p>Roshan is interested in improving his technical interview performance.</p><p>Important preparation areas include:</p><ul><li>JavaScript fundamentals and ES6+.</li><li>Data structures and algorithms.</li><li>React and React Native concepts.</li><li>Node.js and backend development.</li><li>REST API design.</li><li>SQL and database concepts.</li><li>Git and software development workflows.</li><li>System design fundamentals.</li><li>Project explanation and problem solving.</li></ul><p>Sawari Saathi can be used as a practical example when answering project-based interview questions.</p>"
+ },
+ {
+ "category": "CV and Resume",
+ "keywords": ["cv", "resume", "curriculum vitae", "resume writing", "professional resume", "job application", "cover letter"],
+ "answer": "<p>Roshan's CV should highlight his BSc. CSIT education, software development skills, practical project experience, and startup involvement.</p><p>Recommended sections include:</p><ul><li>Professional summary.</li><li>Technical skills.</li><li>Professional experience.</li><li>Projects and achievements.</li><li>Education.</li><li>Certifications.</li><li>GitHub and portfolio links.</li></ul><p>His Sawari Saathi experience is particularly valuable for demonstrating practical product development experience.</p>"
+ },
+ {
+ "category": "Portfolio",
+ "keywords": ["portfolio", "personal website", "website", "github portfolio", "developer portfolio", "online profile"],
+ "answer": "<p>Roshan's portfolio is intended to showcase his technical background, projects, and professional development.</p><p>It should highlight:</p><ul><li>Introduction and professional summary.</li><li>Technical skills and technology stack.</li><li>Sawari Saathi and other projects.</li><li>Professional experience.</li><li>Education.</li><li>GitHub repositories.</li><li>Contact information.</li></ul><p>GitHub: <a href=\"https://github.com/Roshan-Pokharel\" target=\"_blank\">View GitHub Profile</a></p><p>Website: <a href=\"https://roshanpokhrel.me\" target=\"_blank\">roshanpokhrel.me</a></p>"
+ },
+ {
+ "category": "Learning and Self Improvement",
+ "keywords": ["learning", "self improvement", "what should i learn", "new skills", "study plan", "roadmap", "personal development"],
+ "answer": "<p>Roshan believes in continuous learning and improving his technical and professional abilities.</p><p>Useful learning areas include:</p><ul><li>Advanced JavaScript and TypeScript.</li><li>React and React Native architecture.</li><li>Backend engineering and system design.</li><li>Python and AI development.</li><li>Machine Learning fundamentals.</li><li>Cloud computing and DevOps.</li><li>English communication and professional writing.</li><li>Problem solving and algorithms.</li></ul>"
+ },
+ {
+ "category": "Contact and Hire",
+ "keywords": ["contact", "hire", "email", "phone", "whatsapp", "reach roshan", "call", "message", "freelance", "collaboration"],
+ "answer": "<p>You can contact Roshan through the following channels:</p><ul><li><strong>Email:</strong> <a href=\"mailto:roshanpokhrel890@gmail.com\">roshanpokhrel890@gmail.com</a></li><li><strong>Phone / WhatsApp:</strong> <a href=\"https://wa.me/9779746385400\">+977 974-638-5400</a></li><li><strong>GitHub:</strong> <a href=\"https://github.com/Roshan-Pokharel\" target=\"_blank\">github.com/Roshan-Pokharel</a></li><li><strong>Portfolio:</strong> <a href=\"https://roshanpokhrel.me\" target=\"_blank\">roshanpokhrel.me</a></li><li><strong>Project:</strong> <a href=\"https://www.sawarisaathi.com\" target=\"_blank\">Sawari Saathi</a></li></ul><p>For professional opportunities, software development projects, and collaboration, feel free to reach out.</p>"
+ },
+ {
+ "category": "Thanks and Goodbye",
+ "keywords": ["thank", "thanks", "thank you", "bye", "goodbye", "see you", "awesome", "great", "nice"],
+ "answer": "<p>You're very welcome! Thanks for your interest in Roshan Pokhrel.</p><p>Feel free to explore his projects and professional profile or contact him directly at <a href=\"mailto:roshanpokhrel890@gmail.com\">roshanpokhrel890@gmail.com</a>.</p><p>Have a wonderful day!</p>"
+ }
+ ]
+}

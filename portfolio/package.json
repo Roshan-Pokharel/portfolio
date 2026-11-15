@@ -1,0 +1,22 @@
+{
+  "name": "roshan-pokhrel-portfolio",
+  "version": "1.0.0",
+  "description": "Portfolio website of Roshan Pokhrel — Full Stack Developer | Mobile App Developer | UI Designer",
+  "main": "index.html",
+  "scripts": {
+    "start": "npx serve -l 3000",
+    "dev": "npx serve -l 3000",
+    "preview": "npx serve -l 3000"
+  },
+  "keywords": [
+    "portfolio",
+    "developer",
+    "full-stack",
+    "mobile-app",
+    "react",
+    "react-native",
+    "node"
+  ],
+  "author": "Roshan Pokhrel <roshanpokhrel890@gmail.com>",
+  "license": "MIT"
+}

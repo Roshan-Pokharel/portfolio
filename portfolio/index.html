@@ -1,415 +1,874 @@
 <!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Roshan Pokhrel - Full Stack Developer Portfolio</title>
-    <link rel="stylesheet" href="style.css" />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
-      rel="stylesheet"
-    />
-  </head>
-  <body>
-    <header class="site-header">
-      <nav class="container nav-bar">
-        <a href="#" class="nav-logo">Roshan Pokhrel</a>
-        <div class="nav-links">
-          <a href="#about">About</a>
-          <a href="#projects">Projects</a>
-          <a href="#contact">Contact</a>
-          <a href="Roshan_Pokhrel_CV.pdf" class="button-primary js-resume-btn"
-            >Resume</a
-          >
-        </div>
-        <button class="nav-mobile-toggle" aria-label="Toggle mobile menu">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            class="icon-menu"
-            width="24"
-            height="24"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-          >
-            <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="2"
-              d="M4 6h16M4 12h16m-7 6h7"
-            />
-          </svg>
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            class="icon-close"
-            width="24"
-            height="24"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-          >
-            <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="2"
-              d="M6 18L18 6M6 6l12 12"
-            />
-          </svg>
-        </button>
-      </nav>
-      <div class="nav-mobile-menu">
-        <a href="#about">About</a>
-        <a href="#projects">Projects</a>
-        <a href="#contact">Contact</a>
-        <a href="Roshan_Pokhrel_CV.pdf" class="button-primary js-resume-btn"
-          >Resume</a
-        >
-      </div>
-    </header>
+<html lang="en" class="h-full antialiased">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="color-scheme" content="light dark" />
+  <script>
+    /* Immediate inline FOUC prevention matching modern web best practices */
+    (function() {
+      try {
+        var stored = localStorage.getItem('color-scheme');
+        var prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+        var isDark = stored === 'dark' || (!stored && prefersDark);
+        if (isDark) {
+          document.documentElement.classList.add('dark');
+          document.querySelector('meta[name="color-scheme"]').content = 'dark';
+        } else {
+          document.documentElement.classList.remove('dark');
+          document.querySelector('meta[name="color-scheme"]').content = 'light';
+        }
+      } catch (e) {}
+    })();
+  </script>
 
-    <main class="container">
-      <section id="hero" class="hero-section">
-        <a
-          class="photo-link js-hero-modal-trigger"
-          href="https://react-course-neon.vercel.app/"
-          aria-label="View project demo"
-        >
-          <div class="hero-image-flipper">
-            <div class="hero-image-wrapper hero-image-front">
-              <img
-                src="my pp (1).jpg"
-                alt="Roshan Pokhrel"
-                class="hero-profile-pic"
-                onerror="this.src='https://placehold.co/250x250/0f172a/e2e8f0?text=RP'; this.onerror=null;"
-              />
-            </div>
-            <div class="hero-image-wrapper hero-image-back">
-              <span>Ask Me</span>
+  <title>Roshan Pokhrel — Full Stack &amp; Mobile App Developer</title>
+  <meta name="description" content="Roshan Pokhrel is a Full Stack Developer, Mobile App Developer, and UI Designer based in Bardaghat, Nawalparasi, Nepal. Co-founder of Sawari Saathi Pvt. Ltd." />
+  <meta name="author" content="Roshan Pokhrel" />
+  <meta name="keywords" content="Roshan Pokhrel, Full Stack Developer, Mobile App Developer, React Native, React.js, Node.js, Express, MongoDB, Sawari Saathi, Nepal" />
+  <link rel="canonical" href="https://roshanpokhrel.me" />
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="Roshan Pokhrel — Full Stack &amp; Mobile App Developer" />
+  <meta property="og:description" content="Full Stack &amp; Mobile App Developer | Co-Founder of Sawari Saathi Pvt. Ltd. | Crafting web, mobile &amp; UI experiences." />
+  <meta property="og:url" content="https://roshanpokhrel.me" />
+  <meta property="og:site_name" content="Roshan Pokhrel" />
+  <meta property="og:type" content="website" />
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/jpeg" href="assets/roshan.jpg" />
+
+  <!-- Stylesheet -->
+  <link rel="stylesheet" href="styles.css" />
+</head>
+
+<body>
+  <!-- Grain Overlay -->
+  <div class="grain" aria-hidden="true"></div>
+
+  <!-- Toast Notification -->
+  <div id="toast-notice" class="toast-notice" role="status" aria-live="polite"></div>
+
+  <!-- Main Container -->
+  <div class="site-wrapper">
+    <main class="content-column">
+
+      <!-- =================================================================
+           HERO SECTION (#top)
+           ================================================================= -->
+      <section id="top" class="hero-section">
+        <!-- Top Profile Row -->
+        <div class="hero-profile-container">
+          <!-- Avatar -->
+          <div class="avatar-wrapper">
+            <img src="assets/roshan.jpg" alt="Roshan Pokhrel" class="avatar-img" width="128" height="128" />
+          </div>
+
+          <!-- Hero Name & Tagline -->
+          <div class="hero-info">
+            <h1 class="hero-heading">Hi, I'm Roshan Pokhrel</h1>
+            <p class="hero-tagline">
+              Architecting full-stack systems, crafting mobile experiences.<br />
+              Writing code, breaking limits, shipping value.
+            </p>
+
+            <!-- Quick Meta Pills -->
+            <div class="meta-chips-row">
+              <span class="meta-chip">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"></path>
+                  <circle cx="12" cy="10" r="3"></circle>
+                </svg>
+                Bardaghat, Nawalparasi, Nepal
+              </span>
+
+              <a href="mailto:roshanpokhrel890@gmail.com" class="meta-chip">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <rect width="20" height="16" x="2" y="4" rx="2"></rect>
+                  <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"></path>
+                </svg>
+                roshanpokhrel890@gmail.com
+              </a>
+
+              <a href="tel:+9779746385400" class="meta-chip">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
+                </svg>
+                +977 974-638-5400
+              </a>
             </div>
           </div>
-        </a>
+        </div>
 
-        <div class="hero-text-content">
-          <h1>Hi, I'm <span class="text-primary">Roshan Pokhrel</span></h1>
-          <p class="hero-subtitle">Full Stack Developer | Mobile App Developer | UI Designer</p>
-          <p class="hero-description">
-            I'm a Full Stack and Mobile App Developer pursuing a B.Sc. in Computer Science and Information Technology. I build complete web and mobile products end-to-end with React, Node.js, Express, and React Native — including a real vehicle rental marketplace with a live Node.js API, a Python microservice for fare calculation, and native iOS/Android apps.
+        <!-- About Me Subsection -->
+        <div class="about-box">
+          <h2 class="about-title">About Me</h2>
+          <p class="about-text">
+            Full Stack and Mobile App Developer with a completed B.Sc. in Computer Science and Information Technology. Skilled in building complete web and mobile applications using React, Node.js, Express, and React Native. Co-founder of Sawari Saathi Pvt. Ltd. with hands-on experience delivering real-world platforms including a ride-sharing service, real-time chat app, and mobile car rental system. Passionate about performant system architecture, clean UI design, and rapid execution.
           </p>
-          <div class="hero-buttons">
-            <a href="#projects" class="button-primary">View My Work</a>
-            <a href="#contact" class="button-secondary">Get In Touch</a>
+        </div>
+      </section>
+
+      <!-- =================================================================
+           SKILLS SECTION (#skills)
+           ================================================================= -->
+      <section id="skills" class="skills-section">
+        <h2 class="section-title" style="width: 100%;">Skills</h2>
+        
+        <div class="skills-grid">
+          <!-- Frontend -->
+          <div class="skill-category">
+            <h3 class="skill-category-title">Frontend</h3>
+            <div class="skill-badges-wrap">
+              <span class="skill-badge">React.js</span>
+              <span class="skill-badge">JavaScript (ES6+)</span>
+              <span class="skill-badge">HTML5</span>
+              <span class="skill-badge">CSS3</span>
+              <span class="skill-badge">Tailwind CSS</span>
+              <span class="skill-badge">Responsive Design</span>
+            </div>
+          </div>
+
+          <!-- Backend & APIs -->
+          <div class="skill-category">
+            <h3 class="skill-category-title">Backend &amp; DB</h3>
+            <div class="skill-badges-wrap">
+              <span class="skill-badge">Node.js</span>
+              <span class="skill-badge">Express.js</span>
+              <span class="skill-badge">REST APIs</span>
+              <span class="skill-badge">Socket.io</span>
+              <span class="skill-badge">MongoDB</span>
+              <span class="skill-badge">PostgreSQL</span>
+              <span class="skill-badge">MySQL</span>
+            </div>
+          </div>
+
+          <!-- Mobile App Development -->
+          <div class="skill-category">
+            <h3 class="skill-category-title">Mobile</h3>
+            <div class="skill-badges-wrap">
+              <span class="skill-badge">React Native</span>
+              <span class="skill-badge">Android &amp; iOS</span>
+              <span class="skill-badge">Mobile-First UI</span>
+              <span class="skill-badge">State Management</span>
+            </div>
+          </div>
+
+          <!-- Tools & Workflow -->
+          <div class="skill-category">
+            <h3 class="skill-category-title">Tools &amp; Workflow</h3>
+            <div class="skill-badges-wrap">
+              <span class="skill-badge">Git</span>
+              <span class="skill-badge">GitHub</span>
+              <span class="skill-badge">VS Code</span>
+              <span class="skill-badge">Postman</span>
+              <span class="skill-badge">JWT Auth</span>
+            </div>
+          </div>
+
+          <!-- Design & Methodologies -->
+          <div class="skill-category">
+            <h3 class="skill-category-title">Design</h3>
+            <div class="skill-badges-wrap">
+              <span class="skill-badge">UI/UX Design</span>
+              <span class="skill-badge">Responsive Layouts</span>
+              <span class="skill-badge">Wireframing</span>
+              <span class="skill-badge">User Flows</span>
+            </div>
+          </div>
+
+          <!-- Core Languages -->
+          <div class="skill-category">
+            <h3 class="skill-category-title">Core Languages</h3>
+            <div class="skill-badges-wrap">
+              <span class="skill-badge">JavaScript</span>
+              <span class="skill-badge">C</span>
+              <span class="skill-badge">C++</span>
+              <span class="skill-badge">SQL</span>
+            </div>
           </div>
         </div>
       </section>
 
-      <section id="about" class="about-section">
-        <h2 class="section-title">About Me</h2>
-        <div class="about-content">
-          <div class="about-bio">
-            <p>
-              Hello! I'm Roshan Pokhrel, a Full Stack and Mobile App Developer currently pursuing a B.Sc. in Computer Science and Information Technology at Butwal Multiple Campus. My fascination with technology started when I built my first simple webpage and saw it come to life, and it has since grown into a passion for full-cycle software architecture.
-            </p>
-            <p>
-              I specialize in building robust web and mobile experiences. Along with foundational languages like C++ and Java, my core tech stack revolves around the modern JavaScript ecosystem. I am highly proficient in React and Next.js for the frontend, Node.js and Express for scalable backend REST APIs, and React Native for cross-platform mobile app development — backed by MongoDB, MySQL, and PostgreSQL on the data side.
-            </p>
-            <p>
-              Outside of coding, I enjoy drawing, reading, and fishing. I am a collaborative problem-solver, continuously expanding my technical repertoire, and currently open to full-time roles and professional opportunities in software engineering.
-            </p>
+      <!-- =================================================================
+           WORK EXPERIENCE SECTION (#experience)
+           ================================================================= -->
+      <section id="experience" class="timeline-section">
+        <h2 class="section-title" style="width: 100%;">Work Experience</h2>
+
+        <div class="timeline-list">
+          <!-- Item 1: Sawari Saathi (Co-Founder) -->
+          <div class="accordion-item open">
+            <button class="accordion-header" type="button" aria-expanded="true">
+              <div class="org-logo-wrap">
+                <img src="assets/sawari.webp" alt="Sawari Saathi Logo" class="org-logo-img" />
+              </div>
+              <div class="accordion-content-meta">
+                <div class="accordion-title-row">
+                  <h3 class="accordion-org-name">Sawari Saathi Pvt. Ltd.</h3>
+                  <svg xmlns="http://www.w3.org/2000/svg" class="accordion-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="m9 18 6-6-6-6"></path>
+                  </svg>
+                </div>
+                <p class="accordion-role">Co-Founder &amp; Full Stack Developer</p>
+                <p class="accordion-date-mobile">2026 – Present</p>
+              </div>
+              <span class="accordion-date-desktop">2026 – Present</span>
+            </button>
+
+            <div class="accordion-body">
+              <div class="accordion-inner">
+                <div class="accordion-description">
+                  <ul>
+                    <li>Co-founded and engineered Sawari Saathi, a vehicle rental and ride-sharing platform connecting drivers and passengers across Nepal.</li>
+                    <li>Led end-to-end architecture, full-stack web and mobile development, and UI/UX design for real-time tracking, booking workflows, and user management.</li>
+                    <li>Oversaw product deployment, system scaling, and technical operations alongside co-founding partner.</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
           </div>
-          <div class="about-skills">
-            <div class="skills-card">
-              <h3>Core Skills</h3>
-              <div class="skills-stats-list">
-                
-                <div class="skill-stat">
-                  <div class="skill-stat-info">
-                    <span class="skill-name">React & Next.js</span>
-                    <span class="skill-percent">85%</span>
-                  </div>
-                  <div class="skill-progress-bar-bg">
-                    <div class="skill-progress-bar" style="width: 85%"></div>
-                  </div>
-                </div>
 
-                <div class="skill-stat">
-                  <div class="skill-stat-info">
-                    <span class="skill-name">Node & Express.js</span>
-                    <span class="skill-percent">80%</span>
-                  </div>
-                  <div class="skill-progress-bar-bg">
-                    <div class="skill-progress-bar" style="width: 80%"></div>
-                  </div>
+          <!-- Item 2: Hubit Pvt. Ltd. (Intern) -->
+          <div class="accordion-item">
+            <button class="accordion-header" type="button" aria-expanded="false">
+              <div class="org-logo-wrap">
+                <img src="assets/hubit.png" alt="Hubit Logo" class="org-logo-img" />
+              </div>
+              <div class="accordion-content-meta">
+                <div class="accordion-title-row">
+                  <h3 class="accordion-org-name">Hubit Pvt. Ltd.</h3>
+                  <svg xmlns="http://www.w3.org/2000/svg" class="accordion-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="m9 18 6-6-6-6"></path>
+                  </svg>
                 </div>
+                <p class="accordion-role">Full Stack Developer Intern</p>
+                <p class="accordion-date-mobile">2025 – 2026</p>
+              </div>
+              <span class="accordion-date-desktop">2025 – 2026</span>
+            </button>
 
-                <div class="skill-stat">
-                  <div class="skill-stat-info">
-                    <span class="skill-name">React Native</span>
-                    <span class="skill-percent">75%</span>
-                  </div>
-                  <div class="skill-progress-bar-bg">
-                    <div class="skill-progress-bar" style="width: 75%"></div>
-                  </div>
+            <div class="accordion-body">
+              <div class="accordion-inner">
+                <div class="accordion-description">
+                  <ul>
+                    <li>Developed and maintained responsive web applications using modern frontend and backend technologies.</li>
+                    <li>Built and integrated RESTful APIs, managed database schemas, and collaborated with senior developers on production features and debugging.</li>
+                  </ul>
                 </div>
-
-                <div class="skill-stat">
-                  <div class="skill-stat-info">
-                    <span class="skill-name">MongoDB / MySQL / PostgreSQL</span>
-                    <span class="skill-percent">75%</span>
-                  </div>
-                  <div class="skill-progress-bar-bg">
-                    <div class="skill-progress-bar" style="width: 75%"></div>
-                  </div>
-                </div>
-
-                <div class="skill-stat">
-                  <div class="skill-stat-info">
-                    <span class="skill-name">JavaScript/HTML/CSS</span>
-                    <span class="skill-percent">90%</span>
-                  </div>
-                  <div class="skill-progress-bar-bg">
-                    <div class="skill-progress-bar" style="width: 90%"></div>
-                  </div>
-                </div>
-
-                <div class="skill-stat">
-                  <div class="skill-stat-info">
-                    <span class="skill-name">C/C++ & Java</span>
-                    <span class="skill-percent">70%</span>
-                  </div>
-                  <div class="skill-progress-bar-bg">
-                    <div class="skill-progress-bar" style="width: 70%"></div>
-                  </div>
-                </div>
-
-                <div class="skill-stat">
-                  <div class="skill-stat-info">
-                    <span class="skill-name">Problem Solving</span>
-                    <span class="skill-percent">90%</span>
-                  </div>
-                  <div class="skill-progress-bar-bg">
-                    <div class="skill-progress-bar" style="width: 90%"></div>
-                  </div>
-                </div>
-
               </div>
             </div>
           </div>
         </div>
       </section>
 
+      <!-- =================================================================
+           EDUCATION SECTION (#education)
+           ================================================================= -->
+      <section id="education" class="timeline-section">
+        <h2 class="section-title" style="width: 100%;">Education</h2>
+
+        <div class="timeline-list">
+          <!-- Education 1: Butwal Multiple Campus -->
+          <div class="accordion-item open">
+            <button class="accordion-header" type="button" aria-expanded="true">
+              <div class="org-logo-wrap">
+                <img src="assets/bmc.jpg" alt="BMC Logo" class="org-logo-img" />
+              </div>
+              <div class="accordion-content-meta">
+                <div class="accordion-title-row">
+                  <h3 class="accordion-org-name">Butwal Multiple Campus</h3>
+                  <svg xmlns="http://www.w3.org/2000/svg" class="accordion-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="m9 18 6-6-6-6"></path>
+                  </svg>
+                </div>
+                <p class="accordion-role">B.Sc. in Computer Science &amp; Information Technology (BSc.CSIT)</p>
+                <p class="accordion-date-mobile">Completed (2022 – 2026)</p>
+              </div>
+              <span class="accordion-date-desktop">Completed (2022 – 2026)</span>
+            </button>
+
+            <div class="accordion-body">
+              <div class="accordion-inner">
+                <div class="accordion-description">
+                  <ul>
+                    <li>Completed degree with rigorous coursework in data structures, algorithms, software engineering, databases, and distributed web technologies.</li>
+                    <li>Applied academic knowledge directly to engineering production full-stack systems and cross-platform mobile development projects.</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Education 2: Kumudini College -->
+          <div class="accordion-item">
+            <button class="accordion-header" type="button" aria-expanded="false">
+              <div class="org-logo-wrap">
+                <img src="assets/kumudini.jpg" alt="Kumudini College Logo" class="org-logo-img" />
+              </div>
+              <div class="accordion-content-meta">
+                <div class="accordion-title-row">
+                  <h3 class="accordion-org-name">Kumudini College</h3>
+                  <svg xmlns="http://www.w3.org/2000/svg" class="accordion-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="m9 18 6-6-6-6"></path>
+                  </svg>
+                </div>
+                <p class="accordion-role">Intermediate (+2) in Science</p>
+                <p class="accordion-date-mobile">Completed (2020 – 2021)</p>
+              </div>
+              <span class="accordion-date-desktop">Completed (2020 – 2021)</span>
+            </button>
+
+            <div class="accordion-body">
+              <div class="accordion-inner">
+                <div class="accordion-description">
+                  <p>Graduated with 3.36 GPA (Grade A) with a comprehensive foundation in physics, mathematics, and computing principles.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Education 3: Holy Care -->
+          <div class="accordion-item">
+            <button class="accordion-header" type="button" aria-expanded="false">
+              <div class="org-logo-wrap">
+                <img src="assets/holycare.png" alt="Holy Care Logo" class="org-logo-img" />
+              </div>
+              <div class="accordion-content-meta">
+                <div class="accordion-title-row">
+                  <h3 class="accordion-org-name">Holy Care English Secondary School</h3>
+                  <svg xmlns="http://www.w3.org/2000/svg" class="accordion-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="m9 18 6-6-6-6"></path>
+                  </svg>
+                </div>
+                <p class="accordion-role">Secondary Education Examination (SEE)</p>
+                <p class="accordion-date-mobile">Passed (2019)</p>
+              </div>
+              <span class="accordion-date-desktop">Passed (2019)</span>
+            </button>
+
+            <div class="accordion-body">
+              <div class="accordion-inner">
+                <div class="accordion-description">
+                  <p>Graduated with 3.55 GPA (Grade A) and early active participation in technology clubs.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- =================================================================
+           PROJECTS & PROOFS SECTION (#projects)
+           ================================================================= -->
       <section id="projects" class="projects-section">
-        <h2 class="section-title">My Projects</h2>
+        <div style="width: 100%; text-align: left; margin-bottom: 1.5rem;">
+          <h2 class="section-title" style="margin-bottom: 0.5rem;">Projects &amp; Proofs</h2>
+          <p class="section-subtitle">A selection of systems, interfaces, and backend architectures I've built.</p>
+        </div>
+
         <div class="projects-grid">
-
-          <div class="project-card">
-            <img
-              src="sawari-saathi-web.png"
-              alt="Sawari Saathi web platform screenshot"
-              class="project-image"
-              onerror="this.src='https://placehold.co/600x400/334155/e2e8f0?text=Sawari+Saathi'; this.onerror=null;"
-            />
-            <div class="project-info">
-              <h3>Sawari Saathi</h3>
-              <p>
-                A vehicle rental and mobility marketplace for Nepal. The Next.js web app talks to a Node.js/Express REST API backed by MongoDB Atlas, with a dedicated Python (FastAPI) microservice on Oracle Cloud handling route distance, elevation, and fare calculation. Google Maps Platform powers live location, routing, and pickup/drop-off.
-              </p>
-              <div class="project-tags">
-                <span>Next.js</span>
-                <span>Node.js/Express</span>
-                <span>MongoDB</span>
-                <span>Python/FastAPI</span>
-                <span>Google Maps API</span>
-              </div>
-              <p class="project-note">Private project — client platform</p>
+          <!-- Project 1: Sawari Saathi Platform -->
+          <article class="project-card">
+            <div class="project-media-wrap">
+              <img src="assets/sawari-saathi.png" alt="Preview of Sawari Saathi Platform" class="project-img" />
+              <div class="project-overlay"></div>
             </div>
-          </div>
-
-          <div class="project-card">
-            <img
-              src="bheri-rmc.png"
-              alt="Bheri RMC website screenshot"
-              class="project-image"
-              onerror="this.src='https://placehold.co/600x400/334155/e2e8f0?text=Bheri+RMC'; this.onerror=null;"
-            />
-            <div class="project-info">
-              <h3>Bheri RMC</h3>
-              <p>
-                A business website for Bheri RMC, a ready-mix concrete (RMC) supplier, built to showcase their products and services and give customers an easy way to get in touch.
-              </p>
+            <div class="project-details">
+              <h3 class="project-title">Sawari Saathi Platform</h3>
+              <p class="project-desc">A comprehensive vehicle rental and ride-sharing ecosystem connecting drivers and passengers with live GPS fleet radar.</p>
+              
               <div class="project-tags">
-                <span>Web Design</span>
-                <span>Business Website</span>
+                <span class="tag-item"><span class="tag-name">React.js</span><span class="tag-separator">/</span></span>
+                <span class="tag-item"><span class="tag-name">React Native</span><span class="tag-separator">/</span></span>
+                <span class="tag-item"><span class="tag-name">Node.js</span><span class="tag-separator">/</span></span>
+                <span class="tag-item"><span class="tag-name">MongoDB</span></span>
               </div>
-              <p class="project-note">Client project</p>
-            </div>
-          </div>
 
-          <div class="project-card">
-            <img
-              src="oztintandwrap.png"
-              alt="Oztintandwrap website screenshot"
-              class="project-image"
-              onerror="this.src='https://placehold.co/600x400/334155/e2e8f0?text=Oztintandwrap'; this.onerror=null;"
-            />
-            <div class="project-info">
-              <h3>Oztintandwrap</h3>
-              <p>
-                A business website for Oztintandwrap, a vehicle tint and wrap service, presenting their services, gallery, and contact details to customers.
-              </p>
+              <div class="project-links">
+                <a href="https://sawarisaathi.com" target="_blank" rel="noopener noreferrer" class="btn-pill">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M7 7h10v10"></path>
+                    <path d="M7 17 17 7"></path>
+                  </svg>
+                  Website
+                </a>
+                <a href="https://github.com/Roshan-Pokharel" target="_blank" rel="noopener noreferrer" class="btn-pill">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"></path>
+                    <path d="M9 18c-4.51 2-5-2-7-2"></path>
+                  </svg>
+                  GitHub
+                </a>
+              </div>
+            </div>
+          </article>
+
+          <!-- Project 2: Car Rental Mobile App -->
+          <article class="project-card">
+            <div class="project-media-wrap">
+              <img src="assets/car-rental.png" alt="Preview of Car Rental Mobile App" class="project-img" />
+              <div class="project-overlay"></div>
+            </div>
+            <div class="project-details">
+              <h3 class="project-title">Car Rental Mobile App [Mobile]</h3>
+              <p class="project-desc">Full-featured mobile application allowing users to browse, book, and manage vehicle rentals with real-time availability updates.</p>
+              
               <div class="project-tags">
-                <span>Web Design</span>
-                <span>Business Website</span>
+                <span class="tag-item"><span class="tag-name">React Native</span><span class="tag-separator">/</span></span>
+                <span class="tag-item"><span class="tag-name">Node.js</span><span class="tag-separator">/</span></span>
+                <span class="tag-item"><span class="tag-name">MongoDB</span><span class="tag-separator">/</span></span>
+                <span class="tag-item"><span class="tag-name">Express</span></span>
               </div>
-              <p class="project-note">Client project</p>
-            </div>
-          </div>
 
-          <div class="project-card">
-            <img
-              src="sawari-saathi-mobile.png"
-              alt="Sawari Saathi mobile app screenshot"
-              class="project-image"
-              onerror="this.src='https://placehold.co/600x400/334155/e2e8f0?text=Sawari+Saathi+Mobile'; this.onerror=null;"
-            />
-            <div class="project-info">
-              <h3>Sawari Saathi — Mobile App</h3>
-              <p>
-                The React Native (Expo) companion app for Sawari Saathi. Riders browse and book vehicles, track pickup/drop-off on live maps, and sign in with Google or Apple, with Firebase-backed push notifications for booking updates and EAS Build for iOS/Android distribution.
-              </p>
+              <div class="project-links">
+                <a href="https://play.google.com/store/apps/details?id=com.rozn.SawariSaathi" target="_blank" rel="noopener noreferrer" class="btn-pill" id="car-rental-download-btn">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                    <polyline points="7 10 12 15 17 10"></polyline>
+                    <line x1="12" x2="12" y1="15" y2="3"></line>
+                  </svg>
+                  Download
+                </a>
+                <a href="https://github.com/Roshan-Pokharel" target="_blank" rel="noopener noreferrer" class="btn-pill">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"></path>
+                    <path d="M9 18c-4.51 2-5-2-7-2"></path>
+                  </svg>
+                  GitHub
+                </a>
+              </div>
+            </div>
+          </article>
+
+          <!-- Project 3: Oz Tint & Wrap -->
+          <article class="project-card">
+            <div class="project-media-wrap">
+              <img src="assets/oztintandwrap.png" alt="Preview of Oz Tint &amp; Wrap Website" class="project-img" />
+              <div class="project-overlay"></div>
+            </div>
+            <div class="project-details">
+              <h3 class="project-title">Oz Tint &amp; Wrap [Web Platform]</h3>
+              <p class="project-desc">Commercial automotive styling and protection platform in Sydney, Australia showcasing premium ceramic window tinting, vehicle color wraps, and headlight restoration with online service inquiries.</p>
+              
               <div class="project-tags">
-                <span>React Native</span>
-                <span>Expo</span>
-                <span>Firebase</span>
-                <span>Google/Apple Sign-In</span>
+                <span class="tag-item"><span class="tag-name">React.js</span><span class="tag-separator">/</span></span>
+                <span class="tag-item"><span class="tag-name">Vite</span><span class="tag-separator">/</span></span>
+                <span class="tag-item"><span class="tag-name">Tailwind CSS</span><span class="tag-separator">/</span></span>
+                <span class="tag-item"><span class="tag-name">JavaScript</span></span>
               </div>
-              <p class="project-note">Private project — in development</p>
-            </div>
-          </div>
 
-          <div class="project-card">
-            <img
-              src="sawari-saathi-cms.png"
-              alt="Sawari Saathi admin dashboard screenshot"
-              class="project-image"
-              onerror="this.src='https://placehold.co/600x400/334155/e2e8f0?text=Sawari+Saathi+CMS'; this.onerror=null;"
-            />
-            <div class="project-info">
-              <h3>Sawari Saathi CMS</h3>
-              <p>
-                The internal admin dashboard for managing Sawari Saathi's vehicles, bookings, and users. Built with Next.js and TanStack Query for data fetching, React Hook Form with Zod for validated forms, and Recharts for operational analytics.
-              </p>
+              <div class="project-links">
+                <a href="https://www.oztintandwrap.com/" target="_blank" rel="noopener noreferrer" class="btn-pill">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M7 7h10v10"></path>
+                    <path d="M7 17 17 7"></path>
+                  </svg>
+                  Website
+                </a>
+                <a href="https://github.com/Roshan-Pokharel" target="_blank" rel="noopener noreferrer" class="btn-pill">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"></path>
+                    <path d="M9 18c-4.51 2-5-2-7-2"></path>
+                  </svg>
+                  GitHub
+                </a>
+              </div>
+            </div>
+          </article>
+
+          <!-- Project 4: Bheri RMC -->
+          <article class="project-card">
+            <div class="project-media-wrap">
+              <img src="assets/bherirmc.png" alt="Preview of Bheri RMC Ready-Mix Concrete Platform" class="project-img" />
+              <div class="project-overlay"></div>
+            </div>
+            <div class="project-details">
+              <h3 class="project-title">Bheri RMC [Web Platform]</h3>
+              <p class="project-desc">Digital platform for a ready-mix concrete enterprise in western Nepal providing custom mix design calculations, real-time quote inquiries, and on-site delivery dispatch across Banke, Bardiya, and Surkhet.</p>
+              
               <div class="project-tags">
-                <span>Next.js</span>
-                <span>TanStack Query</span>
-                <span>React Hook Form</span>
-                <span>Recharts</span>
+                <span class="tag-item"><span class="tag-name">Next.js</span><span class="tag-separator">/</span></span>
+                <span class="tag-item"><span class="tag-name">React.js</span><span class="tag-separator">/</span></span>
+                <span class="tag-item"><span class="tag-name">Tailwind CSS</span><span class="tag-separator">/</span></span>
+                <span class="tag-item"><span class="tag-name">Node.js</span></span>
               </div>
-              <p class="project-note">Private project — internal tool</p>
-            </div>
-          </div>
 
+              <div class="project-links">
+                <a href="https://www.bherirmc.com.np" target="_blank" rel="noopener noreferrer" class="btn-pill">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M7 7h10v10"></path>
+                    <path d="M7 17 17 7"></path>
+                  </svg>
+                  Website
+                </a>
+                <a href="https://github.com/Roshan-Pokharel" target="_blank" rel="noopener noreferrer" class="btn-pill">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"></path>
+                    <path d="M9 18c-4.51 2-5-2-7-2"></path>
+                  </svg>
+                  GitHub
+                </a>
+              </div>
+            </div>
+          </article>
         </div>
       </section>
 
+      <!-- =================================================================
+           GITHUB ACTIVITY HEATMAP (#github-activity)
+           ================================================================= -->
+      <section id="github-activity" class="github-section">
+        <div style="width: 100%; text-align: left;">
+          <h2 class="section-title" style="margin-bottom: 0.25rem;">GitHub Activity</h2>
+          <div class="github-header-row">
+            <p id="github-subtext" class="github-subtext">1,895 contributions in the last year</p>
+            <a href="https://github.com/Roshan-Pokharel" target="_blank" rel="noreferrer" class="github-profile-link">
+              Follow on GitHub ↗
+            </a>
+          </div>
+        </div>
+
+        <!-- 52-Week Contribution Matrix -->
+        <div class="github-heatmap-container">
+          <div id="github-heatmap-grid" class="github-heatmap-grid">
+            <!-- Heatmap cells dynamically populated by script.js -->
+          </div>
+        </div>
+
+        <!-- Legend (Less -> More) matching reference site -->
+        <div class="github-legend-row">
+          <div class="github-legend">
+            <span>Less</span>
+            <div class="legend-cells">
+              <div class="heatmap-cell lvl-0"></div>
+              <div class="heatmap-cell lvl-1"></div>
+              <div class="heatmap-cell lvl-2"></div>
+              <div class="heatmap-cell lvl-3"></div>
+              <div class="heatmap-cell lvl-4"></div>
+            </div>
+            <span>More</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- =================================================================
+           LANGUAGES & PROFICIENCY SECTION
+           ================================================================= -->
+      <section class="timeline-section">
+        <h2 class="section-title" style="width: 100%;">Languages &amp; Proficiency</h2>
+
+        <div class="timeline-list">
+          <div class="accordion-item open">
+            <button class="accordion-header" type="button" aria-expanded="true">
+              <div class="org-logo-wrap">
+                <img src="assets/pte.jpg" alt="PTE Academic Logo" class="org-logo-img" />
+              </div>
+              <div class="accordion-content-meta">
+                <div class="accordion-title-row">
+                  <h3 class="accordion-org-name">English PTE Academic</h3>
+                </div>
+                <p class="accordion-role">Overall Score: 62 (Professional Working Proficiency)</p>
+              </div>
+              <span class="accordion-date-desktop">Score: 62</span>
+            </button>
+            <div class="accordion-body">
+              <div class="accordion-inner">
+                <div class="accordion-description">
+                  <p>Fluent and confident in technical documentation, architectural reviews, and cross-border client collaboration.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="accordion-item open">
+            <button class="accordion-header" type="button" aria-expanded="true">
+              <div class="org-logo-wrap">
+                <img src="assets/nepal.jpg" alt="Nepali Language" class="org-logo-img" />
+              </div>
+              <div class="accordion-content-meta">
+                <div class="accordion-title-row">
+                  <h3 class="accordion-org-name">Nepali</h3>
+                </div>
+                <p class="accordion-role">Native Proficiency</p>
+              </div>
+              <span class="accordion-date-desktop">Native</span>
+            </button>
+            <div class="accordion-body">
+              <div class="accordion-inner">
+                <div class="accordion-description">
+                  <p>Native language with complete fluency in spoken and written communication.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- =================================================================
+           INTERESTS SECTION
+           ================================================================= -->
+      <section class="interests-section">
+        <h2 class="section-title" style="width: 100%;">Interests &amp; Passions</h2>
+
+        <div class="interests-grid">
+          <div class="interest-card">
+            <span class="interest-icon" aria-hidden="true">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
+                <rect width="18" height="12" x="3" y="4" rx="2"></rect>
+                <line x1="2" x2="22" y1="20" y2="20"></line>
+              </svg>
+            </span>
+            <span class="interest-label">Full Stack Dev</span>
+          </div>
+
+          <div class="interest-card">
+            <span class="interest-icon" aria-hidden="true">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
+                <rect width="14" height="20" x="5" y="2" rx="2" ry="2"></rect>
+                <line x1="12" x2="12.01" y1="18" y2="18"></line>
+              </svg>
+            </span>
+            <span class="interest-label">Mobile App Dev</span>
+          </div>
+
+          <div class="interest-card">
+            <span class="interest-icon" aria-hidden="true">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="13.5" cy="6.5" r=".5" fill="currentColor"></circle>
+                <circle cx="17.5" cy="10.5" r=".5" fill="currentColor"></circle>
+                <circle cx="8.5" cy="7.5" r=".5" fill="currentColor"></circle>
+                <circle cx="6.5" cy="12.5" r=".5" fill="currentColor"></circle>
+                <path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c.926 0 1.648-.746 1.648-1.688 0-.437-.18-.835-.437-1.125-.29-.289-.438-.652-.438-1.125a1.64 1.64 0 0 1 1.668-1.668h1.996c3.051 0 5.563-2.512 5.563-5.563C22 6.5 17.5 2 12 2Z"></path>
+              </svg>
+            </span>
+            <span class="interest-label">UI/UX Design</span>
+          </div>
+
+          <div class="interest-card">
+            <span class="interest-icon" aria-hidden="true">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"></path>
+                <path d="m15 5 4 4"></path>
+              </svg>
+            </span>
+            <span class="interest-label">Drawing &amp; Sketching</span>
+          </div>
+
+          <div class="interest-card">
+            <span class="interest-icon" aria-hidden="true">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path>
+                <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path>
+              </svg>
+            </span>
+            <span class="interest-label">Reading</span>
+          </div>
+
+          <div class="interest-card">
+            <span class="interest-icon" aria-hidden="true">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M6.5 12c.94-3.46 4.94-6 8.5-6 3.56 0 6.06 2.54 7 6-.94 3.47-3.44 6-7 6s-7.56-2.53-8.5-6Z"></path>
+                <path d="M18 12v.5"></path>
+                <path d="M16 17.93a11.1 11.1 0 0 1-4-.93"></path>
+                <path d="M2 7l4 5-4 5V7z"></path>
+              </svg>
+            </span>
+            <span class="interest-label">Fishing</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- =================================================================
+           CONTACT SECTION (#contact)
+           ================================================================= -->
       <section id="contact" class="contact-section">
-        <h2 class="section-title">Get In Touch</h2>
-        <p>
-          I'm currently open to new professional opportunities. My
-          inbox is always open, whether you have a question or just want to say
-          hi!
+        <span class="contact-pill-badge">Chat Bot</span>
+        <h2 class="contact-main-heading">Get in Touch</h2>
+        <p class="contact-subtext">
+          Have a question, collaboration idea, or want to discuss full-stack &amp; mobile development? Click the message box below to chat with my Chat Bot!
         </p>
 
-        <div class="contact-methods">
-          <a href="mailto:info@roshanpokharel.com" class="button-primary">
-            Say Hello (Email)
-          </a>
-          <button
-            id="copy-btn"
-            class="button-secondary"
-            data-email="info@roshanpokharel.com"
-          >
-            Copy Email Address
-          </button>
+        <!-- Message Box Trigger (Clicking pops up the messaging UI) -->
+        <div class="chat-trigger-card" id="chat-trigger-card" role="button" tabindex="0" aria-haspopup="dialog" aria-expanded="false" aria-label="Open Roshan's Chat Bot">
+          <div class="chat-trigger-profile">
+            <div class="chat-trigger-avatar">
+              <img src="assets/roshan.jpg" alt="Roshan Avatar" />
+              <span class="status-indicator" title="Online"></span>
+            </div>
+            <div class="chat-trigger-info">
+              <span class="chat-trigger-name">Roshan's Chat Bot</span>
+              <span class="chat-trigger-status">Online • Ready to answer your questions</span>
+            </div>
+          </div>
+          <div class="chat-trigger-input-bar">
+            <span class="chat-trigger-placeholder">Ask anything about Roshan... (Click to chat)</span>
+            <div class="chat-trigger-action">
+              <span>Chat</span>
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="chat-trigger-icon">
+                <path d="m22 2-7 20-4-9-9-4Z"></path>
+                <path d="M22 2 11 13"></path>
+              </svg>
+            </div>
+          </div>
         </div>
-
-        <div id="copy-feedback">Copied to clipboard!</div>
       </section>
+
     </main>
 
+    <!-- =================================================================
+         SITE FOOTER
+         ================================================================= -->
     <footer class="site-footer">
-      <div class="container footer-content">
-        <div class="social-links">
-          <a
-            href="https://github.com/Roshan-Pokharel"
-            aria-label="GitHub"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="28"
-              height="28"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-            >
-              <path
-                d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87c0-.66-.25-1.28-.75-1.75C15.38 15.38 13.75 15 12 15c-1.75 0-3.38.38-4.25 1.38-.5.47-.75 1.09-.75 1.75V21M12 2C6.48 2 2 6.48 2 12c0 4.42 2.87 8.17 6.84 9.5.5.09.68-.22.68-.48v-1.69c-2.78.6-3.37-1.34-3.37-1.34-.46-1.16-1.11-1.47-1.11-1.47-.91-.62.07-.61.07-.61 1.01.07 1.53 1.04 1.53 1.04.9 1.53 2.36 1.09 2.94.83.09-.65.35-1.09.64-1.34-2.25-.26-4.6-1.12-4.6-5 0-1.11.4-2.02 1.05-2.73-.1-.26-.46-1.29.1-2.69 0 0 .85-.27 2.78 1.04.81-.22 1.67-.33 2.52-.33.85 0 1.71.11 2.52.33 1.94-1.31 2.78-1.04 2.78-1.04.56 1.4.2 2.43.1 2.69.65.71 1.05 1.62 1.05 2.73 0 3.89-2.35 4.74-4.6 5 .36.31.68.92.68 1.85v2.78c0 .27.18.58.69.48A9.99 9.99 0 0 0 22 12C22 6.48 17.52 2 12 2z"
-              ></path>
-            </svg>
-          </a>
-          <a
-            href="https://www.linkedin.com/in/roshan-pokharel-666189259/"
-            aria-label="LinkedIn"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="28"
-              height="28"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-            >
-              <path
-                d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"
-              ></path>
-              <rect x="2" y="9" width="4" height="12"></rect>
-              <circle cx="4" cy="4" r="2"></circle>
-            </svg>
-          </a>
-        </div>
-        <p>&copy; 2026 Roshan Pokhrel. All rights reserved.</p>
-      </div>
+      <p class="footer-copy">© 2026 Roshan Pokhrel. All rights reserved.</p>
     </footer>
+  </div>
 
-    <div id="dustbin" aria-hidden="true">
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        width="32"
-        height="32"
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke="currentColor"
-        stroke-width="2"
-        stroke-linecap="round"
-        stroke-linejoin="round"
-      >
-        <path
-          d="M3 6h18M5 6v14a2 2 0 002 2h10a2 2 0 002-2V6M8 6V4a2 2 0 012-2h4a2 2 0 012 2v2M10 11v6M14 11v6"
-        ></path>
+  <!-- =================================================================
+       FLOATING BOTTOM DOCK NAVBAR (Iconic Sujal Shrestha Dock)
+       ================================================================= -->
+  <nav class="floating-dock" aria-label="Quick Navigation Dock">
+    <!-- Home / Top -->
+    <a href="#top" class="dock-btn" aria-label="Home" data-tooltip="Home">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M15 21v-8a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v8"></path>
+        <path d="M3 10a2 2 0 0 1 .709-1.528l7-6a2 2 0 0 1 2.582 0l7 6A2 2 0 0 1 21 10v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
       </svg>
-    </div>
+    </a>
 
-    <script src="script.js"></script>
-  </body>
+    <!-- Skills -->
+    <a href="#skills" class="dock-btn" aria-label="Skills" data-tooltip="Skills">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="m18 16 4-4-4-4"></path>
+        <path d="m6 8-4 4 4 4"></path>
+        <path d="m14.5 4-5 16"></path>
+      </svg>
+    </a>
+
+    <!-- Experience -->
+    <a href="#experience" class="dock-btn" aria-label="Experience" data-tooltip="Experience">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <rect width="20" height="14" x="2" y="7" rx="2" ry="2"></rect>
+        <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path>
+      </svg>
+    </a>
+
+    <!-- Projects -->
+    <a href="#projects" class="dock-btn" aria-label="Projects" data-tooltip="Projects">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <polygon points="12 2 2 7 12 12 22 7 12 2"></polygon>
+        <polyline points="2 17 12 22 22 17"></polyline>
+        <polyline points="2 12 12 17 22 12"></polyline>
+      </svg>
+    </a>
+
+    <!-- Contact / Chat Bot -->
+    <button type="button" class="dock-btn" id="dock-chat-btn" aria-label="Open Chat Bot" data-tooltip="Chat Bot">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"></path>
+      </svg>
+    </button>
+
+    <!-- GitHub Profile -->
+    <a href="https://github.com/Roshan-Pokharel" target="_blank" rel="noopener noreferrer" class="dock-btn" aria-label="GitHub" data-tooltip="GitHub">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"></path>
+        <path d="M9 18c-4.51 2-5-2-7-2"></path>
+      </svg>
+    </a>
+
+    <!-- Divider -->
+    <div class="dock-divider"></div>
+
+    <!-- Dark / Light Theme Toggle -->
+    <button type="button" id="theme-toggle" class="dock-btn" aria-label="Toggle Color Theme" data-tooltip="Toggle Theme">
+      <!-- Sun Icon (shown in dark mode) -->
+      <svg id="sun-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display: none;">
+        <circle cx="12" cy="12" r="4"></circle>
+        <path d="M12 2v2"></path>
+        <path d="M12 20v2"></path>
+        <path d="m4.93 4.93 1.41 1.41"></path>
+        <path d="m17.66 17.66 1.41 1.41"></path>
+        <path d="M2 12h2"></path>
+        <path d="M20 12h2"></path>
+        <path d="m6.34 17.66-1.41 1.41"></path>
+        <path d="m19.07 4.93-1.41 1.41"></path>
+      </svg>
+
+      <!-- Moon Icon (shown in light mode) -->
+      <svg id="moon-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M20.985 12.486a9 9 0 1 1-9.473-9.472c.405-.022.617.46.402.803a6 6 0 0 0 8.268 8.268c.344-.215.825-.004.803.401"></path>
+      </svg>
+    </button>
+  </nav>
+
+  <!-- =================================================================
+       CHAT BOT MESSAGING MODAL POPUP (#chatbot-modal)
+       ================================================================= -->
+  <div class="chatbot-modal-overlay" id="chatbot-modal" role="dialog" aria-modal="true" aria-labelledby="chatbot-modal-title" hidden>
+    <div class="chatbot-modal-backdrop" id="chatbot-modal-backdrop"></div>
+
+    <div class="chatbot-modal-container" id="roshan-chatbot">
+      <!-- Chatbot Header -->
+      <div class="chatbot-header">
+        <div class="chatbot-header-profile">
+          <div class="chatbot-avatar">
+            <img src="assets/roshan.jpg" alt="Roshan Avatar" />
+            <span class="status-indicator" title="Online"></span>
+          </div>
+          <div class="chatbot-title-box">
+            <h3 class="chatbot-title" id="chatbot-modal-title">Roshan's Chat Bot</h3>
+            <p class="chatbot-status">Active now • Ask me anything about Roshan</p>
+          </div>
+        </div>
+        <div class="chatbot-header-actions">
+          <button type="button" class="chatbot-reset-btn" id="chatbot-reset-btn" title="Restart conversation" aria-label="Restart conversation">
+            <span class="reset-icon">↻</span><span class="reset-text"> Reset</span>
+          </button>
+          <button type="button" class="chatbot-close-btn" id="chatbot-close-btn" aria-label="Close Chat Bot" title="Close (Esc)">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="18" y1="6" x2="6" y2="18"></line>
+              <line x1="6" y1="6" x2="18" y2="18"></line>
+            </svg>
+          </button>
+        </div>
+      </div>
+
+      <!-- Message Stream Area -->
+      <div class="chatbot-messages" id="chatbot-messages" role="log" aria-live="polite">
+        <!-- Initial Bot Message -->
+        <div class="chat-msg-row bot">
+          <div class="chat-msg-avatar">
+            <img src="assets/roshan.jpg" alt="Roshan" />
+          </div>
+          <div class="chat-msg-content">
+            <p>Hello! I'm <strong>Roshan's Chat Bot</strong>.</p>
+            <p>Ask me anything about Roshan's work experience, full-stack skills, mobile apps with React Native, Sawari Saathi, or how to get in touch!</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Input Bar -->
+      <form class="chatbot-input-wrap" id="chatbot-form">
+        <input 
+          type="text" 
+          class="chatbot-input" 
+          id="chatbot-input" 
+          placeholder="Ask anything about Roshan... (e.g. 'What tech stack do you use?')" 
+          autocomplete="off"
+          aria-label="Ask a question about Roshan"
+        />
+        <button type="submit" class="chatbot-send-btn" id="chatbot-send-btn" aria-label="Send message">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="width: 1rem; height: 1rem;">
+            <path d="m22 2-7 20-4-9-9-4Z"></path>
+            <path d="M22 2 11 13"></path>
+          </svg>
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- JavaScript -->
+  <script src="script.js"></script>
+</body>
 </html>

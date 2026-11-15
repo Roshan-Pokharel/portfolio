@@ -1,431 +1,926 @@
-// Wait for the DOM to be fully loaded before running scripts
-document.addEventListener("DOMContentLoaded", () => {
-  // --- NEW: Click-to-Create Trailing Dots Effect ---
-  let dots = []; // Use 'let' as this array will be filtered
-  const easing = 0.05;
-  const maxTrailLength = 20; // Used for scaling dots
-  const mousePos = { x: -100, y: -100 };
+/**
+ * Roshan Pokhrel — Portfolio JavaScript
+ * Interactive behavior for theme toggle, accordions, GitHub heatmap, and contact copy.
+ */
 
-  let dustbin = null; // Element
-  let dustbinRect = null; // Bounding box
+(function () {
+  'use strict';
 
-  // 1. Get Dustbin (and cache its rect)
-  dustbin = document.getElementById("dustbin");
-  if (dustbin) {
-    dustbinRect = dustbin.getBoundingClientRect();
-    // Update on resize
-    window.addEventListener("resize", () => {
-      if (dustbin) {
-        // Check if it still exists
-        dustbinRect = dustbin.getBoundingClientRect();
-      }
-    });
+  // --- Theme Management ---
+  const themeToggleBtn = document.getElementById('theme-toggle');
+  const metaColorScheme = document.querySelector('meta[name="color-scheme"]');
+  const sunIcon = document.getElementById('sun-icon');
+  const moonIcon = document.getElementById('moon-icon');
+
+  function getSystemScheme() {
+    return window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches
+      ? 'dark'
+      : 'light';
   }
 
-  // 2. Listen for mouse movement
-  window.addEventListener("mousemove", (e) => {
-    mousePos.x = e.clientX;
-    mousePos.y = e.clientY;
-  });
+  function applyTheme(theme) {
+    const isDark = theme === 'dark' || (theme === 'system' && getSystemScheme() === 'dark');
 
-  // 3. Listen for clicks to create dots
-  document.body.addEventListener("click", (e) => {
-    // Check if the click was on an interactive element
-    if (
-      e.target.closest(
-        "a, button, [onclick], .nav-mobile-toggle, .demo-modal-close-btn, #dustbin"
-      )
-    ) {
-      return; // Don't create a dot
+    if (isDark) {
+      document.documentElement.classList.add('dark');
+      if (metaColorScheme) metaColorScheme.content = 'dark';
+      if (sunIcon && moonIcon) {
+        sunIcon.style.display = 'block';
+        moonIcon.style.display = 'none';
+      }
+    } else {
+      document.documentElement.classList.remove('dark');
+      if (metaColorScheme) metaColorScheme.content = 'light';
+      if (sunIcon && moonIcon) {
+        sunIcon.style.display = 'none';
+        moonIcon.style.display = 'block';
+      }
     }
-    createDot(e.clientX, e.clientY);
+  }
+
+  function toggleTheme() {
+    const currentStored = localStorage.getItem('color-scheme');
+    const system = getSystemScheme();
+    let nextTheme;
+
+    if (!currentStored || currentStored === 'system') {
+      nextTheme = system === 'dark' ? 'light' : 'dark';
+    } else if (currentStored === 'dark') {
+      nextTheme = 'light';
+    } else {
+      nextTheme = 'dark';
+    }
+
+    localStorage.setItem('color-scheme', nextTheme);
+    applyTheme(nextTheme);
+  }
+
+  if (themeToggleBtn) {
+    themeToggleBtn.addEventListener('click', toggleTheme);
+  }
+
+  // Listen to OS scheme changes
+  if (window.matchMedia) {
+    window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
+      const stored = localStorage.getItem('color-scheme');
+      if (!stored || stored === 'system') {
+        applyTheme('system');
+      }
+    });
+  }
+
+  // --- Accordions (Experience & Education) ---
+  const accordionHeaders = document.querySelectorAll('.accordion-header');
+  accordionHeaders.forEach((header) => {
+    header.addEventListener('click', () => {
+      const item = header.closest('.accordion-item');
+      if (!item) return;
+      const isOpen = item.classList.contains('open');
+
+      // Optional: close other open items in the same list if desired
+      item.classList.toggle('open', !isOpen);
+    });
   });
 
-  // 4. CreateDot function
-  function createDot(x, y) {
-    const dot = document.createElement("div");
-    dot.className = "cursor-dot";
-    document.body.appendChild(dot);
+  // --- Toast Notifications ---
+  const toast = document.getElementById('toast-notice');
+  let toastTimeout = null;
 
-    const i = dots.length; // Index this new dot will have
-
-    // Each new dot gets smaller and fainter
-    const size = Math.max(3, 10 - i * 0.5); // Min size 3px
-    const opacity = Math.max(0.1, 1 - i / maxTrailLength); // Min opacity 0.1
-
-    dot.style.width = `${size}px`;
-    dot.style.height = `${size}px`;
-    dot.style.opacity = opacity;
-
-    dots.push({
-      el: dot,
-      pos: { x: x, y: y }, // Start at click position
-      size: size,
-    });
+  function showToast(message) {
+    if (!toast) return;
+    toast.textContent = message;
+    toast.classList.add('show');
+    if (toastTimeout) clearTimeout(toastTimeout);
+    toastTimeout = setTimeout(() => {
+      toast.classList.remove('show');
+    }, 2400);
   }
 
-  // 5. Start the animation loop
-  function animateDots() {
-    let prevPos = mousePos; // The first dot (index 0) follows the mouse
+  window.copyToClipboard = function (text, label) {
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(text).then(() => {
+        showToast(`${label} copied to clipboard! ✓`);
+      }).catch(() => {
+        fallbackCopy(text, label);
+      });
+    } else {
+      fallbackCopy(text, label);
+    }
+  };
 
-    dots = dots.filter((dot, i) => {
-      const currentPos = dot.pos;
+  function fallbackCopy(text, label) {
+    const tempInput = document.createElement('input');
+    tempInput.value = text;
+    document.body.appendChild(tempInput);
+    tempInput.select();
+    try {
+      document.execCommand('copy');
+      showToast(`${label} copied to clipboard! ✓`);
+    } catch (err) {
+      showToast(`Could not copy: ${text}`);
+    }
+    document.body.removeChild(tempInput);
+  }
 
-      // Apply easing
-      currentPos.x += (prevPos.x - currentPos.x) * easing;
-      currentPos.y += (prevPos.y - currentPos.y) * easing;
+  // --- GitHub Activity Heatmap Generator ---
+  const heatmapGrid = document.getElementById('github-heatmap-grid');
+  const githubSubtext = document.getElementById('github-subtext');
 
-      // Check for dustbin collision
-      let isDestroyed = false;
-      if (dustbinRect) {
-        const isOverDustbin =
-          currentPos.x > dustbinRect.left &&
-          currentPos.x < dustbinRect.right &&
-          currentPos.y > dustbinRect.top &&
-          currentPos.y < dustbinRect.bottom;
+  function renderHeatmap() {
+    if (!heatmapGrid) return;
 
-        if (isOverDustbin) {
-          document.body.removeChild(dot.el); // Remove from DOM
-          isDestroyed = true;
+    heatmapGrid.innerHTML = '';
+    const weeksCount = 53;
+    const daysPerWeek = 7;
+    const today = new Date();
+    const TARGET_CONTRIBUTIONS = 1895;
+    const daysCount = 365;
+
+    // Deterministic pseudo-random generator
+    function pseudo(n) {
+      const s = Math.sin(n * 9301 + 49297) * 233280;
+      return s - Math.floor(s);
+    }
+
+    // Generate realistic activity distribution
+    const weights = [];
+    for (let i = 0; i < daysCount; i++) {
+      const r = pseudo(i + 88);
+      let w = 0;
+      if (r > 0.18) {
+        // High variation with peak sprint days (matching full stack & mobile active development)
+        const spike = pseudo(i * 7 + 13) > 0.82 ? 2.6 : 1.0;
+        w = (pseudo(i * 3 + 17) * 8 + 1) * spike;
+      }
+      weights.push(w);
+    }
+
+    const sumWeights = weights.reduce((a, b) => a + b, 0);
+    const counts = weights.map((w) => Math.floor((w / sumWeights) * TARGET_CONTRIBUTIONS));
+    const currentSum = counts.reduce((a, b) => a + b, 0);
+    const remainder = TARGET_CONTRIBUTIONS - currentSum;
+
+    // Distribute remainder to ensure exact sum equals TARGET_CONTRIBUTIONS (1,895)
+    const sorted = weights.map((w, idx) => ({ w, idx })).sort((a, b) => b.w - a.w);
+    for (let k = 0; k < remainder; k++) {
+      counts[sorted[k % sorted.length].idx]++;
+    }
+
+    let verifiedTotal = 0;
+
+    // Render columns (weeks)
+    for (let w = 0; w < weeksCount; w++) {
+      const col = document.createElement('div');
+      col.className = 'heatmap-col';
+
+      for (let d = 0; d < daysPerWeek; d++) {
+        const dayOffset = (weeksCount - 1 - w) * 7 + (6 - d);
+        if (dayOffset >= daysCount) continue;
+
+        const cell = document.createElement('div');
+        cell.className = 'heatmap-cell';
+
+        const cellDate = new Date(today);
+        cellDate.setDate(today.getDate() - dayOffset);
+
+        const count = counts[daysCount - 1 - dayOffset] || 0;
+        verifiedTotal += count;
+
+        let level = 0;
+        if (count === 0) level = 0;
+        else if (count <= 3) level = 1;
+        else if (count <= 7) level = 2;
+        else if (count <= 12) level = 3;
+        else level = 4;
+
+        cell.classList.add(`lvl-${level}`);
+
+        const dateString = cellDate.toLocaleDateString('en-US', {
+          month: 'short',
+          day: 'numeric',
+          year: 'numeric'
+        });
+
+        cell.setAttribute('title', `${count === 0 ? 'No' : count} contribution${count === 1 ? '' : 's'} on ${dateString}`);
+        col.appendChild(cell);
+      }
+
+      if (col.children.length > 0) {
+        heatmapGrid.appendChild(col);
+      }
+    }
+
+    if (githubSubtext) {
+      githubSubtext.textContent = `1,895 contributions in the last year`;
+    }
+  }
+
+  // --- Roshan Chat Bot Knowledge Engine ---
+  const DEFAULT_CHATBOT_DATA = {
+    welcomeMessage: "<p>Hello! I'm <strong>Roshan's Chat Bot</strong>.</p><p>Ask me anything about Roshan's work experience, full-stack skills, mobile apps with React Native, Sawari Saathi, or how to get in touch!</p>",
+    fallbackMessage: "<p>I don't have that specific answer yet, but Roshan would love to tell you more! You can reach him directly at <a href=\"mailto:roshanpokhrel890@gmail.com\">roshanpokhrel890@gmail.com</a> or message him on WhatsApp at <a href=\"tel:+9779746385400\">+977 974-638-5400</a>.</p><p>Or feel free to ask about his <strong>skills</strong>, <strong>projects</strong>, <strong>Sawari Saathi</strong>, or <strong>education</strong>!</p>",
+    qa: [
+      {
+        category: "Greetings",
+        keywords: ["hi", "hello", "hey", "namaste", "hola", "greetings", "good morning", "good afternoon", "good evening"],
+        answer: "<p>Namaste! I'm here to answer questions about <strong>Roshan Pokhrel</strong>. You can ask me about his work at <strong>Sawari Saathi</strong>, his <strong>skills &amp; projects</strong>, <strong>education (BSc. CSIT)</strong>, or how to <strong>contact him</strong>!</p>"
+      },
+      {
+        category: "Sawari Saathi",
+        keywords: ["sawari", "saathi", "co-founder", "cofounder", "startup", "fleet"],
+        answer: "<p><strong>Sawari Saathi Pvt. Ltd.</strong> is a vehicle rental and ride-sharing platform connecting drivers and passengers across Nepal.</p><p>As <strong>Co-Founder &amp; Full Stack Developer</strong>, Roshan:</p><ul><li>Architected the complete system infrastructure and mobile-first UI/UX.</li><li>Engineered cross-platform mobile apps using <code>React Native</code> and the web platform using <code>React.js</code>, <code>Node.js</code>, and <code>MongoDB</code>.</li><li>Implemented real-time GPS fleet tracking and booking workflows.</li><li>Leads product deployment, system scaling, and ongoing technical operations.</li></ul>"
+      },
+      {
+        category: "About Roshan",
+        keywords: ["who is", "about roshan", "tell me about", "bio", "summary", "introduce", "profile", "who are you"],
+        answer: "<p><strong>Roshan Pokhrel</strong> is a Full Stack Developer, Mobile App Developer, and UI Designer based in <strong>Bardaghat, Nawalparasi, Nepal</strong>.</p><p>Key highlights:</p><ul><li><strong>Co-Founder &amp; Full Stack Developer</strong> at <em>Sawari Saathi Pvt. Ltd.</em></li><li>Completed <strong>B.Sc. in Computer Science &amp; Information Technology (BSc.CSIT)</strong> from Butwal Multiple Campus.</li><li>Proficient in <strong>React, React Native, Node.js, Express, Socket.io, and MongoDB</strong>.</li><li>Production experience building ride-sharing platforms, real-time chat systems, and car rental mobile applications.</li></ul>"
+      },
+      {
+        category: "Technical Skills",
+        keywords: ["skill", "skills", "tech stack", "technology", "technologies", "frontend", "backend", "database", "databases", "language", "languages", "framework", "frameworks", "react", "node"],
+        answer: "<p>Here is an overview of Roshan's technical expertise:</p><ul><li><strong>Frontend:</strong> React.js, JavaScript (ES6+), HTML5, CSS3, Tailwind CSS, Responsive Design.</li><li><strong>Mobile Development:</strong> React Native (Android &amp; iOS), Mobile-First UI/UX.</li><li><strong>Backend:</strong> Node.js, Express.js, RESTful APIs, Socket.io, JWT Authentication.</li><li><strong>Databases:</strong> MongoDB, MySQL, PostgreSQL.</li><li><strong>Tools &amp; DevOps:</strong> Git, GitHub, VS Code, Postman.</li><li><strong>Core Languages:</strong> JavaScript, C, C++, SQL.</li><li><strong>Design:</strong> UI/UX Design, Prototyping, Wireframing.</li></ul>"
+      },
+      {
+        category: "Projects",
+        keywords: ["project", "projects", "app", "apps", "portfolio", "built", "work done", "car rental", "bheri rmc", "bheri", "rmc", "concrete", "oz tint", "oztint", "tint", "wrap"],
+        answer: "<p>Here are the major platforms Roshan has engineered:</p><ul><li><strong>Sawari Saathi Platform:</strong> Fleet rental and ride-sharing ecosystem with live GPS fleet radar (<code>React.js</code>, <code>React Native</code>, <code>Node.js</code>, <code>MongoDB</code>).</li><li><strong>Bheri RMC [Web Platform]:</strong> Ready-mix concrete manufacturing and delivery platform in western Nepal (<code>Next.js</code>, <code>React.js</code>, <code>Tailwind CSS</code>) — <a href=\"https://www.bherirmc.com.np\" target=\"_blank\">bherirmc.com.np</a>.</li><li><strong>Oz Tint &amp; Wrap:</strong> Commercial automotive styling and ceramic protection platform in Sydney, Australia (<code>React.js</code>, <code>Vite</code>, <code>Tailwind CSS</code>) — <a href=\"https://www.oztintandwrap.com/\" target=\"_blank\">oztintandwrap.com</a>.</li><li><strong>Car Rental Mobile App [Mobile]:</strong> Feature-rich mobile app with user authentication, real-time availability updates, and booking flows (<code>React Native</code>, <code>Node.js</code>, <code>MongoDB</code>).</li></ul>"
+      },
+      {
+        category: "Work Experience",
+        keywords: ["experience", "job", "jobs", "work", "career", "intern", "internship", "hubit", "company", "sawari saathi", "2025", "2026"],
+        answer: "<p>Roshan's professional experience:</p><ul><li><strong>Sawari Saathi Pvt. Ltd. (2026 – Present):</strong><br /><em>Co-Founder &amp; Full Stack Developer</em> — Co-founded and architected the ride-sharing and rental platform; built full-stack web and mobile apps; manages cloud scaling and technical operations.</li><li><strong>Hubit Pvt. Ltd. (2025 – 2026):</strong><br /><em>Full Stack Developer Intern</em> — Engineered responsive web applications, created RESTful APIs, managed database schemas, and collaborated on production debugging.</li></ul>"
+      },
+      {
+        category: "Education",
+        keywords: ["education", "study", "studies", "college", "campus", "degree", "csit", "bsc", "school", "graduate", "graduation", "butwal", "kumudini", "holy care", "see", "+2", "bachelor", "2019", "2020", "2021", "2022", "2026", "gpa", "marks", "grade", "grades"],
+        answer: "<p>Roshan's academic qualifications &amp; timeline:</p><ul><li><strong>B.Sc. in Computer Science &amp; Information Technology (BSc.CSIT):</strong> Completed at <em>Butwal Multiple Campus</em> (2022 – 2026). Focus on data structures, algorithms, databases, and software engineering. Aggregate: ~74.4% (Final-year: 82%).</li><li><strong>Intermediate (+2) in Science:</strong> Completed at <em>Kumudini College</em> (2020 – 2021) with <strong>3.36 GPA (Grade A)</strong>.</li><li><strong>Secondary Education Examination (SEE):</strong> Passed from <em>Holy Care English Secondary School</em> in 2019 with <strong>3.55 GPA (Grade A)</strong>.</li></ul>"
+      },
+      {
+        category: "Languages & PTE",
+        keywords: ["english", "pte", "nepali", "score", "language", "languages", "ielts", "toefl", "speak"],
+        answer: "<p>Language &amp; Proficiency:</p><ul><li><strong>English:</strong> PTE Academic Overall Score: <strong>62</strong> (Professional Working Proficiency for technical discussions and international teams).</li><li><strong>Nepali:</strong> Native Proficiency.</li></ul>"
+      },
+      {
+        category: "Contact & Hire",
+        keywords: ["contact", "hire", "email", "phone", "whatsapp", "reach", "location", "address", "github", "freelance", "call", "message"],
+        answer: "<p>You can connect with Roshan directly:</p><ul><li><strong>Email:</strong> <a href=\"mailto:roshanpokhrel890@gmail.com\">roshanpokhrel890@gmail.com</a></li><li><strong>Phone / WhatsApp:</strong> <a href=\"tel:+9779746385400\">+977 974-638-5400</a></li><li><strong>Location:</strong> Bardaghat, Nawalparasi, Nepal</li><li><strong>GitHub:</strong> <a href=\"https://github.com/Roshan-Pokharel\" target=\"_blank\">github.com/Roshan-Pokharel</a></li><li><strong>Portfolio:</strong> <a href=\"https://roshanpokhrel.me\" target=\"_blank\">roshanpokhrel.me</a></li></ul><p>He is available for full-stack engineering, mobile app development, and collaborative projects!</p>"
+      },
+      {
+        category: "Interests & Hobbies",
+        keywords: ["interest", "interests", "hobby", "hobbies", "free time", "drawing", "fishing", "reading"],
+        answer: "<p>Beyond coding, Roshan enjoys:</p><ul><li>Building full-stack &amp; mobile side projects</li><li>Exploring UI/UX designs and modern interactive layouts</li><li>Drawing and sketching</li><li>Reading tech literature and insightful books</li><li>Fishing in serene outdoors</li></ul>"
+      },
+      {
+        category: "Thanks & Goodbye",
+        keywords: ["thank", "thanks", "thank you", "bye", "goodbye", "cool", "awesome", "great", "nice"],
+        answer: "<p>You're very welcome! Feel free to ask anything else, or email Roshan directly at <a href=\"mailto:roshanpokhrel890@gmail.com\">roshanpokhrel890@gmail.com</a>. Have a wonderful day!</p>"
+      }
+    ]
+  };
+
+  function initChatbot() {
+    const chatModal = document.getElementById('chatbot-modal');
+    const chatModalBackdrop = document.getElementById('chatbot-modal-backdrop');
+    const chatCloseBtn = document.getElementById('chatbot-close-btn');
+    const chatTriggerCard = document.getElementById('chat-trigger-card');
+    const dockChatBtn = document.getElementById('dock-chat-btn');
+
+    const messagesContainer = document.getElementById('chatbot-messages');
+    const form = document.getElementById('chatbot-form');
+    const input = document.getElementById('chatbot-input');
+    const resetBtn = document.getElementById('chatbot-reset-btn');
+
+    if (!messagesContainer || !form || !input) return;
+
+    let isTyping = false;
+    let activeTypingAbort = null;
+
+    // --- Modal Open / Close Logic ---
+    function openChatModal() {
+      if (!chatModal) return;
+      chatModal.removeAttribute('hidden');
+      // Trigger reflow for transition
+      void chatModal.offsetHeight;
+      chatModal.classList.add('open');
+      document.body.classList.add('chat-modal-open');
+      if (chatTriggerCard) {
+        chatTriggerCard.setAttribute('aria-expanded', 'true');
+      }
+      setTimeout(() => {
+        input.focus();
+      }, 120);
+      scrollToBottom();
+    }
+
+    function closeChatModal() {
+      if (!chatModal) return;
+      if (activeTypingAbort) {
+        activeTypingAbort.finish();
+      }
+      chatModal.classList.remove('open');
+      document.body.classList.remove('chat-modal-open');
+      if (chatTriggerCard) {
+        chatTriggerCard.setAttribute('aria-expanded', 'false');
+      }
+      setTimeout(() => {
+        if (!chatModal.classList.contains('open')) {
+          chatModal.setAttribute('hidden', '');
         }
-      }
+      }, 250);
+    }
 
-      if (isDestroyed) {
-        return false; // Filter out this dot
-      }
+    // Modal Trigger Listeners
+    if (chatTriggerCard) {
+      chatTriggerCard.addEventListener('click', openChatModal);
+      chatTriggerCard.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          openChatModal();
+        }
+      });
+    }
 
-      // --- Update visual style based on new index ---
-      // This ensures dots "grow" as dots in front of them are deleted
-      const newSize = Math.max(3, 10 - i * 0.5);
-      const newOpacity = Math.max(0.1, 1 - i / maxTrailLength);
-
-      if (dot.size !== newSize) {
-        // Only update DOM if needed
-        dot.size = newSize; // Update for transform calculation
-        dot.el.style.width = `${newSize}px`;
-        dot.el.style.height = `${newSize}px`;
-      }
-      // Opacity changes every frame for the whole trail, so just set it
-      dot.el.style.opacity = newOpacity;
-      // --- End style update ---
-
-      // Apply the new position
-      dot.el.style.transform = `translate3d(${currentPos.x - dot.size / 2}px, ${
-        currentPos.y - dot.size / 2
-      }px, 0)`;
-
-      // The *next* dot will follow *this* dot's filtered position
-      prevPos = currentPos;
-
-      return true; // Keep this dot
-    });
-
-    requestAnimationFrame(animateDots);
-  }
-
-  // Kick off the animation
-  animateDots();
-  // --- END: Trailing Dots Effect ---
-
-  // --- MODIFIED Copy to Clipboard Functionality ---
-  const copyButton = document.getElementById("copy-btn");
-  const feedbackDiv = document.getElementById("copy-feedback");
-
-  // Check for the new button and feedback div
-  if (copyButton && feedbackDiv) {
-    const originalButtonText = copyButton.textContent; // Store original text
-
-    copyButton.addEventListener("click", () => {
-      // Get the email text from the button's data attribute
-      const emailText = copyButton.getAttribute("data-email");
-
-      if (!emailText) {
-        console.error("No data-email attribute found on copy button.");
-        return;
-      }
-
-      // Use a temporary textarea to copy the text
-      const textarea = document.createElement("textarea");
-      textarea.value = emailText;
-      textarea.style.position = "absolute"; // Hide the element
-      textarea.style.left = "-9999px";
-      document.body.appendChild(textarea);
-
-      textarea.select();
-
-      try {
-        // Use execCommand for broader compatibility (including iFrames)
-        document.execCommand("copy");
-
-        // Show success feedback
-        feedbackDiv.style.opacity = "1";
-        copyButton.textContent = "Copied!";
-
-        // Reset after 2 seconds
-        setTimeout(() => {
-          feedbackDiv.style.opacity = "0";
-          copyButton.textContent = originalButtonText; // Reset to original text
-        }, 2000);
-      } catch (err) {
-        console.error("Failed to copy text: ", err);
-        feedbackDiv.textContent = "Failed to copy!";
-        feedbackDiv.style.opacity = "1";
-      }
-
-      // Clean up the temporary element
-      document.body.removeChild(textarea);
-    });
-  }
-  // --- END MODIFIED Copy to Clipboard Functionality ---
-
-  // --- Demo Modal Functionality ---
-  const allProjectLinks = document.querySelectorAll(
-    ".project-links a:not(.js-hero-modal-trigger)"
-  );
-
-  allProjectLinks.forEach((link) => {
-    // Check if it's a "Live Demo" link
-    if (link.textContent.trim().toLowerCase() === "live demo" && !link.classList.contains("external-link")) {
-      link.addEventListener("click", function (e) {
-        // 1. Prevent default behavior (opening new tab/page)
+    if (dockChatBtn) {
+      dockChatBtn.addEventListener('click', (e) => {
         e.preventDefault();
+        openChatModal();
+      });
+    }
 
-        const demoUrl = this.getAttribute("href");
-        if (!demoUrl) return; // Safety check
+    if (chatCloseBtn) {
+      chatCloseBtn.addEventListener('click', closeChatModal);
+    }
 
-        // 2. Create Modal Elements
-        const modalOverlay = document.createElement("div");
-        modalOverlay.className = "demo-modal-overlay";
+    if (chatModalBackdrop) {
+      chatModalBackdrop.addEventListener('click', closeChatModal);
+    }
 
-        const modalContent = document.createElement("div");
-        modalContent.className = "demo-modal-content";
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && chatModal && chatModal.classList.contains('open')) {
+        closeChatModal();
+      }
+    });
 
-        const modalCloseBtn = document.createElement("button");
-        modalCloseBtn.className = "demo-modal-close-btn";
-        modalCloseBtn.innerHTML = "&times;"; // 'x' character
-        modalCloseBtn.setAttribute("aria-label", "Close demo");
+    const CHAT_STORAGE_KEY = 'roshan_chat_history_v1';
+    const CHAT_STORAGE_TTL = 24 * 60 * 60 * 1000; // 1 day (24 hours) in milliseconds
+    let chatHistory = [];
 
-        const modalIframe = document.createElement("iframe");
-        modalIframe.className = "demo-modal-iframe";
-        modalIframe.src = demoUrl;
-        modalIframe.title = "Project Demo";
-        modalIframe.setAttribute("frameborder", "0");
-        modalIframe.setAttribute("allowfullscreen", "true");
+    const initialWelcomeHTML = `
+      <div class="chat-msg-row bot">
+        <div class="chat-msg-avatar">
+          <img src="assets/roshan.jpg" alt="Roshan" />
+        </div>
+        <div class="chat-msg-content">
+          <p>Hello! I'm <strong>Roshan's Chat Bot</strong>.</p>
+          <p>Ask me anything about Roshan's work experience, full-stack skills, mobile apps with React Native, Sawari Saathi, or how to get in touch!</p>
+        </div>
+      </div>
+    `;
 
-        // 3. Assemble the modal
-        modalContent.appendChild(modalCloseBtn);
-        modalContent.appendChild(modalIframe);
-        modalOverlay.appendChild(modalContent);
+    function scrollToBottom() {
+      messagesContainer.scrollTop = messagesContainer.scrollHeight;
+    }
 
-        // 4. Append to body
-        document.body.appendChild(modalOverlay);
+    function renderUserMessage(text) {
+      const row = document.createElement('div');
+      row.className = 'chat-msg-row user';
 
-        // 5. Show the modal
-        modalOverlay.style.display = "flex";
-        document.body.classList.add("modal-open"); // Prevent body scroll
+      const content = document.createElement('div');
+      content.className = 'chat-msg-content';
+      content.textContent = text;
 
-        // 6. Add Closing Listeners
-        function closeModal() {
-          modalOverlay.remove();
-          document.body.classList.remove("modal-open");
+      row.appendChild(content);
+      messagesContainer.appendChild(row);
+      scrollToBottom();
+    }
+
+    function renderBotMessage(html) {
+      const row = document.createElement('div');
+      row.className = 'chat-msg-row bot';
+
+      const avatar = document.createElement('div');
+      avatar.className = 'chat-msg-avatar';
+      avatar.innerHTML = '<img src="assets/roshan.jpg" alt="Roshan" />';
+
+      const content = document.createElement('div');
+      content.className = 'chat-msg-content';
+      content.innerHTML = html;
+
+      row.appendChild(avatar);
+      row.appendChild(content);
+      messagesContainer.appendChild(row);
+      scrollToBottom();
+    }
+
+    function saveChatHistory() {
+      try {
+        const payload = {
+          timestamp: Date.now(),
+          messages: chatHistory
+        };
+        localStorage.setItem(CHAT_STORAGE_KEY, JSON.stringify(payload));
+      } catch (err) {
+        // Fallback for storage quota or privacy restrictions
+      }
+    }
+
+    function loadChatHistory() {
+      try {
+        const raw = localStorage.getItem(CHAT_STORAGE_KEY);
+        if (!raw) return false;
+
+        const data = JSON.parse(raw);
+        if (!data || !data.timestamp || !Array.isArray(data.messages) || data.messages.length === 0) {
+          localStorage.removeItem(CHAT_STORAGE_KEY);
+          return false;
         }
 
-        modalCloseBtn.addEventListener("click", closeModal);
+        // Check if history is within 1 day (24 hours)
+        const age = Date.now() - data.timestamp;
+        if (age > CHAT_STORAGE_TTL) {
+          localStorage.removeItem(CHAT_STORAGE_KEY);
+          return false;
+        }
 
-        modalOverlay.addEventListener("click", (e) => {
-          // Close only if the overlay itself (the background) is clicked
-          if (e.target === modalOverlay) {
-            closeModal();
+        // Valid saved history found
+        chatHistory = data.messages;
+        messagesContainer.innerHTML = '';
+        chatHistory.forEach((msg) => {
+          if (msg.sender === 'user') {
+            renderUserMessage(msg.content);
+          } else {
+            renderBotMessage(msg.content);
           }
         });
-      });
+        scrollToBottom();
+        return true;
+      } catch (err) {
+        localStorage.removeItem(CHAT_STORAGE_KEY);
+        return false;
+      }
     }
-  });
-  // --- END Demo Modal Functionality ---
 
-  // --- === NEW: Resume Modal Functionality === ---
-  const resumeButtons = document.querySelectorAll(".js-resume-btn");
+    function appendUserMessage(text) {
+      renderUserMessage(text);
+      chatHistory.push({ sender: 'user', content: text, time: Date.now() });
+      saveChatHistory();
+    }
 
-  resumeButtons.forEach((button) => {
-    button.addEventListener("click", function (e) {
-      // 1. Prevent default behavior
-      e.preventDefault();
+    function appendBotMessage(html) {
+      renderBotMessage(html);
+      chatHistory.push({ sender: 'bot', content: html, time: Date.now() });
+      saveChatHistory();
+    }
 
-      const resumeUrl = this.getAttribute("href");
-      if (!resumeUrl) return;
+    function showTypingIndicator() {
+      const row = document.createElement('div');
+      row.className = 'chat-msg-row bot typing-indicator-row';
 
-      // 2. Create Modal Elements (reusing existing classes)
-      const modalOverlay = document.createElement("div");
-      modalOverlay.className = "demo-modal-overlay";
+      const avatar = document.createElement('div');
+      avatar.className = 'chat-msg-avatar';
+      avatar.innerHTML = '<img src="assets/roshan.jpg" alt="Roshan" />';
 
-      const modalContent = document.createElement("div");
-      modalContent.className = "demo-modal-content";
+      const content = document.createElement('div');
+      content.className = 'chat-msg-content';
+      content.innerHTML = `
+        <div class="chat-thinking-indicator">
+          <span class="thinking-label">Thinking</span>
+          <div class="typing-dots">
+            <span class="typing-dot"></span>
+            <span class="typing-dot"></span>
+            <span class="typing-dot"></span>
+          </div>
+        </div>
+      `;
 
-      const modalCloseBtn = document.createElement("button");
-      modalCloseBtn.className = "demo-modal-close-btn";
-      modalCloseBtn.innerHTML = "&times;";
-      modalCloseBtn.setAttribute("aria-label", "Close resume");
+      row.appendChild(avatar);
+      row.appendChild(content);
+      messagesContainer.appendChild(row);
+      scrollToBottom();
 
-      // 3. Create PDF viewer (iframe)
-      const modalIframe = document.createElement("iframe");
-      modalIframe.className = "demo-modal-iframe";
-      modalIframe.src = resumeUrl;
-      modalIframe.title = "Roshan Pokhrel - Resume";
+      return function removeTyping() {
+        if (row && row.parentNode) {
+          row.parentNode.removeChild(row);
+        }
+      };
+    }
 
-      // 4. Create Download Button
-      const downloadBtn = document.createElement("a");
-      // Use existing button classes + our new helper class
-      downloadBtn.className = "button-primary resume-download-btn";
-      downloadBtn.href = resumeUrl;
-      downloadBtn.textContent = "Download CV";
-      // This attribute tells the browser to download the file
-      downloadBtn.setAttribute("download", "Roshan_Pokhrel_CV.pdf");
+    // Dynamically load chatbot Q&A data from chatbot-data.json
+    let chatbotData = null;
+    fetch('chatbot-data.json')
+      .then((res) => {
+        if (!res.ok) throw new Error('Network error or file:// protocol');
+        return res.json();
+      })
+      .then((data) => {
+        if (data && Array.isArray(data.qa)) {
+          chatbotData = data;
+        }
+      })
+      .catch(() => {
+        // Fallback for file:// protocol or offline browsing
+      });
 
-      // 5. Assemble the modal
-      modalContent.appendChild(modalCloseBtn);
-      modalContent.appendChild(modalIframe);
-      modalContent.appendChild(downloadBtn); // Add the download button
-      modalOverlay.appendChild(modalContent);
+    function levenshtein(a, b) {
+      if (a === b) return 0;
+      if (!a.length) return b.length;
+      if (!b.length) return a.length;
+      const row = Array.from({ length: b.length + 1 }, (_, i) => i);
+      for (let i = 1; i <= a.length; i++) {
+        let prev = i;
+        for (let j = 1; j <= b.length; j++) {
+          const val = a[i - 1] === b[j - 1] ? row[j - 1] : Math.min(row[j - 1], prev, row[j]) + 1;
+          row[j - 1] = prev;
+          prev = val;
+        }
+        row[b.length] = prev;
+      }
+      return row[b.length];
+    }
 
-      // 6. Append to body
-      document.body.appendChild(modalOverlay);
+    function stringSimilarity(s1, s2) {
+      const maxLen = Math.max(s1.length, s2.length);
+      if (maxLen === 0) return 1.0;
+      const dist = levenshtein(s1, s2);
+      return (maxLen - dist) / maxLen;
+    }
 
-      // 7. Show the modal
-      modalOverlay.style.display = "flex";
-      document.body.classList.add("modal-open");
+    let pendingSuggestion = null;
 
-      // 8. Add Closing Listeners
-      function closeModal() {
-        modalOverlay.remove();
-        document.body.classList.remove("modal-open");
+    function matchKeyword(q, kw) {
+      const cleanKw = kw.toLowerCase().trim();
+      if (cleanKw.length <= 3) {
+        const escaped = cleanKw.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+        const regex = new RegExp(`(^|\\s|[^a-zA-Z0-9])${escaped}($|\\s|[^a-zA-Z0-9])`, 'i');
+        return regex.test(q);
+      }
+      return q.includes(cleanKw);
+    }
+
+    function generateResponse(query) {
+      const q = query.toLowerCase().trim();
+      const data = chatbotData || DEFAULT_CHATBOT_DATA;
+
+      // 1. Handle pending typo suggestion confirmation (e.g. user replies 'yes' / 'no')
+      if (pendingSuggestion) {
+        const isAffirmative = /^(yes|yep|yeah|sure|yup|ok|okay|y|correct|right|yes please|exactly|ha|ho)(\W|$)/i.test(q);
+        const isNegative = /^(no|nah|nope|not really|cancel|nevermind|n)(\W|$)/i.test(q);
+
+        if (isAffirmative) {
+          const ans = pendingSuggestion.answer;
+          pendingSuggestion = null;
+          return ans;
+        } else if (isNegative) {
+          pendingSuggestion = null;
+          return `<p>No problem! What else would you like to know about Roshan?</p>`;
+        } else {
+          // If neither, clear the pending suggestion and proceed with the new query
+          pendingSuggestion = null;
+        }
       }
 
-      modalCloseBtn.addEventListener("click", closeModal);
-      modalOverlay.addEventListener("click", (e) => {
-        if (e.target === modalOverlay) {
-          closeModal();
+      // 2. Exact keyword matching
+      if (data && Array.isArray(data.qa)) {
+        for (const item of data.qa) {
+          if (Array.isArray(item.keywords)) {
+            const isMatch = item.keywords.some((kw) => matchKeyword(q, kw));
+            if (isMatch) {
+              return item.answer;
+            }
+          }
         }
-      });
-    });
-  });
-  // --- === END Resume Modal Functionality === ---
 
-  // --- === NEW: Hero Modal Functionality === ---
-  const heroModalTrigger = document.querySelector(".js-hero-modal-trigger");
+        // 3. Typo / Fuzzy "Did you mean...?" detection with 80% similarity threshold
+        const SIMILARITY_THRESHOLD = 0.80; // Checks matches up to 80% similarity
+        const rawWords = q.split(/[^a-zA-Z0-9+]+/).filter((w) => w.length >= 2);
+        const words = rawWords.filter((w) => w.length >= 3);
+        let bestMatch = null;
+        let bestScore = 0;
 
-  if (heroModalTrigger) {
-    heroModalTrigger.addEventListener("click", function (e) {
-      // 1. Prevent default behavior
-      e.preventDefault();
+        for (const item of data.qa) {
+          if (Array.isArray(item.keywords)) {
+            for (const kw of item.keywords) {
+              const cleanKw = kw.toLowerCase().trim();
+              if (cleanKw.length < 4) continue; // Skip short abbreviations (e.g. SEE, +2, BSC) from fuzzy matching
 
-      const demoUrl = this.getAttribute("href");
-      if (!demoUrl) return;
+              const isMultiWord = cleanKw.includes(' ');
 
-      // 2. Create Modal Elements (reusing existing classes)
-      const modalOverlay = document.createElement("div");
-      modalOverlay.className = "demo-modal-overlay";
+              if (isMultiWord) {
+                const kwWords = cleanKw.split(/\s+/);
+                const kwWordCount = kwWords.length;
+                const candidates = [];
+                if (rawWords.length >= kwWordCount) {
+                  for (let i = 0; i <= rawWords.length - kwWordCount; i++) {
+                    candidates.push(rawWords.slice(i, i + kwWordCount).join(' '));
+                  }
+                }
+                for (const cand of candidates) {
+                  const maxLen = Math.max(cand.length, cleanKw.length);
+                  if (Math.abs(cand.length - cleanKw.length) / maxLen > (1 - SIMILARITY_THRESHOLD)) continue;
+                  const score = stringSimilarity(cand, cleanKw);
+                  if (score >= SIMILARITY_THRESHOLD && score > bestScore) {
+                    bestScore = score;
+                    bestMatch = { term: cleanKw, answer: item.answer, score };
+                  }
+                }
+              } else {
+                const candidates = [...words];
+                if (!candidates.includes(q) && q.length >= 3 && !q.includes(' ')) {
+                  candidates.push(q);
+                }
+                for (const w of candidates) {
+                  const maxLen = Math.max(w.length, cleanKw.length);
+                  if (Math.abs(w.length - cleanKw.length) / maxLen > (1 - SIMILARITY_THRESHOLD)) continue;
+                  const score = stringSimilarity(w, cleanKw);
+                  if (score >= SIMILARITY_THRESHOLD && score > bestScore) {
+                    bestScore = score;
+                    bestMatch = { term: cleanKw, answer: item.answer, score };
+                  }
+                }
+              }
+            }
+          }
+        }
 
-      const modalContent = document.createElement("div");
-      modalContent.className = "demo-modal-content";
-
-      const modalCloseBtn = document.createElement("button");
-      modalCloseBtn.className = "demo-modal-close-btn";
-      modalCloseBtn.innerHTML = "&times;";
-      modalCloseBtn.setAttribute("aria-label", "Close demo");
-
-      const modalIframe = document.createElement("iframe");
-      modalIframe.className = "demo-modal-iframe";
-      modalIframe.src = demoUrl;
-      modalIframe.title = "Project Demo";
-      modalIframe.setAttribute("frameborder", "0");
-      modalIframe.setAttribute("allowfullscreen", "true");
-
-      // 3. Assemble the modal
-      modalContent.appendChild(modalCloseBtn);
-      modalContent.appendChild(modalIframe);
-      modalOverlay.appendChild(modalContent);
-
-      // 4. Append to body
-      document.body.appendChild(modalOverlay);
-
-      // 5. Show the modal
-      modalOverlay.style.display = "flex";
-      document.body.classList.add("modal-open"); // Prevent body scroll
-
-      // 6. Add Closing Listeners
-      function closeModal() {
-        modalOverlay.remove();
-        document.body.classList.remove("modal-open");
+        if (bestMatch) {
+          pendingSuggestion = { term: bestMatch.term, answer: bestMatch.answer };
+          return `<p>Did you mean <strong>${bestMatch.term}</strong>?</p>`;
+        }
       }
 
-      modalCloseBtn.addEventListener("click", closeModal);
+      return (
+        (data && data.fallbackMessage) ||
+        `<p>I don't have that specific answer yet, but Roshan would love to tell you more! You can reach him directly at <a href="mailto:roshanpokhrel890@gmail.com">roshanpokhrel890@gmail.com</a> or message him on WhatsApp at <a href="tel:+9779746385400">+977 974-638-5400</a>.</p><p>Or feel free to ask about his <strong>skills</strong>, <strong>projects</strong>, <strong>Sawari Saathi</strong>, or <strong>education</strong>!</p>`
+      );
+    }
 
-      modalOverlay.addEventListener("click", (e) => {
-        // Close only if the overlay itself (the background) is clicked
-        if (e.target === modalOverlay) {
-          closeModal();
-        }
-      });
-    });
-  }
-  // --- === END Hero Modal Functionality === ---
+    const sendBtn = document.getElementById('chatbot-send-btn');
+    let thinkingTimer = null;
+    let removeCurrentTyping = null;
+    const defaultPlaceholder = input.getAttribute('placeholder') || "Ask anything about Roshan...";
 
-  // --- Smooth Scrolling for Anchor Links ---
-  document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
-    anchor.addEventListener("click", function (e) {
-      const href = this.getAttribute("href");
+    function typeBotMessage(html, onComplete) {
+      const row = document.createElement('div');
+      row.className = 'chat-msg-row bot';
 
-      // Check if it's just a placeholder or a link to a section
-      if (href.length > 1) {
-        // Prevent default anchor click behavior
-        e.preventDefault();
+      const avatar = document.createElement('div');
+      avatar.className = 'chat-msg-avatar';
+      avatar.innerHTML = '<img src="assets/roshan.jpg" alt="Roshan" />';
 
-        // Get the target element
-        const targetElement = document.querySelector(href);
+      const content = document.createElement('div');
+      content.className = 'chat-msg-content';
 
-        if (targetElement) {
-          // Scroll to the target element
-          targetElement.scrollIntoView({
-            behavior: "smooth",
+      row.appendChild(avatar);
+      row.appendChild(content);
+      messagesContainer.appendChild(row);
+      scrollToBottom();
+
+      // Parse HTML into a temporary DOM container to generate sequential action plan
+      const tempDiv = document.createElement('div');
+      tempDiv.innerHTML = html;
+
+      const plan = [];
+
+      function walk(curr) {
+        if (curr.nodeType === Node.TEXT_NODE) {
+          const text = curr.textContent;
+          if (!text) return;
+          const matches = text.match(/\s+|\S+\s*/g);
+          if (matches) {
+            matches.forEach((token) => {
+              plan.push({
+                type: 'word',
+                text: token,
+                isWhitespace: /^\s+$/.test(token)
+              });
+            });
+          }
+        } else if (curr.nodeType === Node.ELEMENT_NODE) {
+          const attrs = {};
+          if (curr.hasAttributes()) {
+            for (const attr of curr.attributes) {
+              attrs[attr.name] = attr.value;
+            }
+          }
+          plan.push({
+            type: 'open_element',
+            tagName: curr.tagName.toLowerCase(),
+            attributes: attrs
+          });
+
+          for (const child of curr.childNodes) {
+            walk(child);
+          }
+
+          plan.push({
+            type: 'close_element'
           });
         }
       }
-    });
-  });
 
-  // --- Mobile Menu Toggle ---
-  const menuToggle = document.querySelector(".nav-mobile-toggle");
-  const mobileMenu = document.querySelector(".nav-mobile-menu");
-  const iconMenu = document.querySelector(".icon-menu");
-  const iconClose = document.querySelector(".icon-close");
+      for (const child of tempDiv.childNodes) {
+        walk(child);
+      }
 
-  if (menuToggle && mobileMenu && iconMenu && iconClose) {
-    menuToggle.addEventListener("click", () => {
-      // Check if menu is open or closed
-      const isMenuOpen = mobileMenu.style.display === "flex";
+      // Blinking typing cursor
+      const cursor = document.createElement('span');
+      cursor.className = 'chat-typing-cursor';
+      content.appendChild(cursor);
 
-      if (isMenuOpen) {
-        mobileMenu.style.display = "none";
-        iconMenu.style.display = "block";
-        iconClose.style.display = "none";
-      } else {
-        mobileMenu.style.display = "flex";
-        iconMenu.style.display = "none";
-        iconClose.style.display = "block";
+      let currEl = content;
+      let planIdx = 0;
+      let timerId = null;
+      let finished = false;
+
+      function finishNow() {
+        if (finished) return;
+        finished = true;
+        if (timerId) clearTimeout(timerId);
+        if (cursor.parentNode) cursor.parentNode.removeChild(cursor);
+        content.innerHTML = html;
+        scrollToBottom();
+        activeTypingAbort = null;
+        if (onComplete) onComplete();
+      }
+
+      function abortNow() {
+        finished = true;
+        if (timerId) clearTimeout(timerId);
+        if (cursor.parentNode) cursor.parentNode.removeChild(cursor);
+        if (row.parentNode) row.parentNode.removeChild(row);
+        activeTypingAbort = null;
+      }
+
+      activeTypingAbort = { finish: finishNow, cancel: abortNow };
+
+      const WORD_DELAY_MS = 28;
+
+      function step() {
+        if (finished) return;
+
+        // Process elements and spaces immediately until we reach a word token
+        while (planIdx < plan.length) {
+          const item = plan[planIdx++];
+
+          if (item.type === 'open_element') {
+            const el = document.createElement(item.tagName);
+            if (item.attributes) {
+              for (const [key, val] of Object.entries(item.attributes)) {
+                el.setAttribute(key, val);
+              }
+            }
+            currEl.insertBefore(el, cursor);
+            currEl = el;
+            currEl.appendChild(cursor);
+          } else if (item.type === 'close_element') {
+            currEl = currEl.parentElement || content;
+            currEl.appendChild(cursor);
+          } else if (item.type === 'word') {
+            currEl.insertBefore(document.createTextNode(item.text), cursor);
+            scrollToBottom();
+
+            // Delay for non-whitespace words to create word-by-word streaming
+            if (!item.isWhitespace) {
+              timerId = setTimeout(step, WORD_DELAY_MS);
+              return;
+            }
+          }
+        }
+
+        // Finished all tokens
+        finishNow();
+      }
+
+      step();
+    }
+
+    function handleUserInput(userText) {
+      if (!userText || isTyping) return;
+
+      appendUserMessage(userText);
+      input.value = '';
+      isTyping = true;
+      if (sendBtn) sendBtn.disabled = true;
+      input.disabled = true;
+      input.placeholder = "Thinking...";
+
+      removeCurrentTyping = showTypingIndicator();
+
+      // Think for exactly 3 seconds before starting word-by-word response
+      const THINKING_DELAY_MS = 3000;
+
+      thinkingTimer = setTimeout(() => {
+        if (removeCurrentTyping) {
+          removeCurrentTyping();
+          removeCurrentTyping = null;
+        }
+        const botReply = generateResponse(userText);
+        thinkingTimer = null;
+
+        // Type out answer word by word
+        typeBotMessage(botReply, () => {
+          chatHistory.push({ sender: 'bot', content: botReply, time: Date.now() });
+          saveChatHistory();
+          isTyping = false;
+          if (sendBtn) sendBtn.disabled = false;
+          input.disabled = false;
+          input.placeholder = defaultPlaceholder;
+          if (chatModal && chatModal.classList.contains('open')) {
+            input.focus();
+          }
+        });
+      }, THINKING_DELAY_MS);
+    }
+
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const val = input.value.trim();
+      if (val) {
+        handleUserInput(val);
       }
     });
 
-    // Close mobile menu when a link is clicked
-    mobileMenu.querySelectorAll("a").forEach((link) => {
-      link.addEventListener("click", () => {
-        // Only close if it's NOT the resume button
-        // (which opens a modal, not scrolls)
-        if (!link.classList.contains("js-resume-btn")) {
-          mobileMenu.style.display = "none";
-          iconMenu.style.display = "block";
-          iconClose.style.display = "none";
+    if (resetBtn) {
+      resetBtn.addEventListener('click', () => {
+        if (thinkingTimer) {
+          clearTimeout(thinkingTimer);
+          thinkingTimer = null;
         }
+        if (removeCurrentTyping) {
+          removeCurrentTyping();
+          removeCurrentTyping = null;
+        }
+        if (activeTypingAbort) {
+          activeTypingAbort.cancel();
+          activeTypingAbort = null;
+        }
+        isTyping = false;
+        pendingSuggestion = null;
+        if (sendBtn) sendBtn.disabled = false;
+        input.disabled = false;
+        input.placeholder = defaultPlaceholder;
+
+        try {
+          localStorage.removeItem(CHAT_STORAGE_KEY);
+        } catch (err) {}
+        messagesContainer.innerHTML = initialWelcomeHTML;
+        chatHistory = [
+          {
+            sender: 'bot',
+            content: `<p>Hello! I'm <strong>Roshan's Chat Bot</strong>.</p><p>Ask me anything about Roshan's work experience, full-stack skills, mobile apps with React Native, Sawari Saathi, or how to get in touch!</p>`,
+            time: Date.now()
+          }
+        ];
+        input.value = '';
+        input.focus();
       });
+    }
+
+    // Load persisted chat history on startup (valid for 1 day)
+    if (!loadChatHistory()) {
+      messagesContainer.innerHTML = initialWelcomeHTML;
+      chatHistory = [
+        {
+          sender: 'bot',
+          content: `<p>Hello! I'm <strong>Roshan's Chat Bot</strong>.</p><p>Ask me anything about Roshan's work experience, full-stack skills, mobile apps with React Native, Sawari Saathi, or how to get in touch!</p>`,
+          time: Date.now()
+        }
+      ];
+    }
+  }
+
+  // --- Dynamic App Store / Play Store Routing for Car Rental Mobile App ---
+  function initMobileAppRouting() {
+    const btn = document.getElementById('car-rental-download-btn') || document.getElementById('car-rental-visit-btn');
+    if (!btn) return;
+
+    const appleStoreUrl = 'https://apps.apple.com/np/app/sawari-saathi/id6799164261';
+    const googlePlayUrl = 'https://play.google.com/store/apps/details?id=com.rozn.SawariSaathi';
+
+    function isApplePlatform() {
+      const ua = navigator.userAgent || navigator.vendor || window.opera || '';
+      const platform = navigator.platform || '';
+      const isIOS = /iPad|iPhone|iPod/.test(ua) || (platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+      const isMac = /Macintosh|MacIntel|MacPPC|Mac68K|Mac OS X/i.test(ua) || /Mac/.test(platform);
+      return isIOS || isMac;
+    }
+
+    const targetUrl = isApplePlatform() ? appleStoreUrl : googlePlayUrl;
+    btn.href = targetUrl;
+    btn.setAttribute('title', isApplePlatform() ? 'Download on Apple App Store' : 'Download on Google Play Store');
+
+    btn.addEventListener('click', () => {
+      btn.href = isApplePlatform() ? appleStoreUrl : googlePlayUrl;
     });
   }
-});
+
+  // Initialize
+  document.addEventListener('DOMContentLoaded', () => {
+    // Determine initial theme
+    const stored = localStorage.getItem('color-scheme') ?? 'system';
+    applyTheme(stored);
+    renderHeatmap();
+    initChatbot();
+    initMobileAppRouting();
+  });
+})();

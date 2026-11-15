@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="100%" height="100%">
+  <defs>
+    <linearGradient id="hcGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#059669" />
+      <stop offset="100%" stop-color="#10b981" />
+    </linearGradient>
+  </defs>
+  <rect width="100" height="100" rx="50" fill="url(#hcGrad)" />
+  <!-- School Shield & Torch Emblem -->
+  <g fill="white" transform="translate(24, 20)">
+    <path d="M26 6 L44 14 L44 32 C44 44 26 54 26 54 C26 54 8 44 8 32 L8 14 Z" opacity="0.95"/>
+    <path d="M26 14 L26 44 M16 26 L36 26" stroke="#059669" stroke-width="3" stroke-linecap="round"/>
+  </g>
+</svg>

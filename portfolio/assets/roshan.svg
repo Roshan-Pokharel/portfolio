@@ -1,0 +1,78 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" width="100%" height="100%">
+  <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1e293b"/>
+      <stop offset="100%" stop-color="#0f172a"/>
+    </linearGradient>
+    <linearGradient id="accentGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#38bdf8"/>
+      <stop offset="100%" stop-color="#6366f1"/>
+    </linearGradient>
+    <linearGradient id="skinGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#f8cbb0"/>
+      <stop offset="100%" stop-color="#e2a783"/>
+    </linearGradient>
+    <linearGradient id="hairGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#2d3748"/>
+      <stop offset="100%" stop-color="#1a202c"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Background Circle -->
+  <rect width="400" height="400" rx="200" fill="url(#bgGrad)" />
+
+  <!-- Background decorative tech ring -->
+  <circle cx="200" cy="200" r="175" fill="none" stroke="url(#accentGrad)" stroke-width="2.5" stroke-dasharray="8 12" opacity="0.6" />
+  <circle cx="200" cy="200" r="155" fill="none" stroke="#64748b" stroke-width="1" stroke-dasharray="4 6" opacity="0.3" />
+
+  <!-- Code brackets glow -->
+  <path d="M 85 170 L 60 200 L 85 230" fill="none" stroke="url(#accentGrad)" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" opacity="0.75" />
+  <path d="M 315 170 L 340 200 L 315 230" fill="none" stroke="url(#accentGrad)" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" opacity="0.75" />
+
+  <!-- Developer Character Silhouette -->
+  <!-- Shoulders / Hoodie -->
+  <path d="M 105 370 C 110 300, 140 270, 200 270 C 260 270, 290 300, 295 370 Z" fill="#334155" />
+  <path d="M 145 285 C 160 310, 240 310, 255 285 L 235 370 L 165 370 Z" fill="#1e293b" />
+  <path d="M 190 295 L 180 340 M 210 295 L 220 340" stroke="#64748b" stroke-width="3" stroke-linecap="round" />
+
+  <!-- Neck -->
+  <rect x="175" y="225" width="50" height="45" rx="10" fill="url(#skinGrad)" />
+
+  <!-- Head / Face -->
+  <ellipse cx="200" cy="190" rx="60" ry="70" fill="url(#skinGrad)" />
+
+  <!-- Ears -->
+  <ellipse cx="138" cy="195" rx="10" ry="16" fill="url(#skinGrad)" />
+  <ellipse cx="262" cy="195" rx="10" ry="16" fill="url(#skinGrad)" />
+
+  <!-- Modern Haircut -->
+  <path d="M 136 180 C 135 125, 170 105, 200 105 C 240 105, 268 125, 264 180 C 255 155, 240 145, 200 145 C 160 145, 145 160, 136 180 Z" fill="url(#hairGrad)" />
+
+  <!-- Eyeglasses -->
+  <rect x="150" y="172" width="40" height="26" rx="6" fill="#0f172a" fill-opacity="0.15" stroke="#0ea5e9" stroke-width="3" />
+  <rect x="210" y="172" width="40" height="26" rx="6" fill="#0f172a" fill-opacity="0.15" stroke="#0ea5e9" stroke-width="3" />
+  <path d="M 190 183 L 210 183" stroke="#0ea5e9" stroke-width="3" />
+  <path d="M 140 180 L 150 180 M 250 180 L 260 180" stroke="#0ea5e9" stroke-width="3" />
+
+  <!-- Eyes behind glasses -->
+  <circle cx="170" cy="185" r="4" fill="#0f172a" />
+  <circle cx="230" cy="185" r="4" fill="#0f172a" />
+  <circle cx="172" cy="183" r="1.5" fill="#ffffff" />
+  <circle cx="232" cy="183" r="1.5" fill="#ffffff" />
+
+  <!-- Eyebrows -->
+  <path d="M 152 165 Q 170 160 188 165" fill="none" stroke="#1e293b" stroke-width="3.5" stroke-linecap="round" />
+  <path d="M 212 165 Q 230 160 248 165" fill="none" stroke="#1e293b" stroke-width="3.5" stroke-linecap="round" />
+
+  <!-- Nose -->
+  <path d="M 200 188 L 196 205 L 204 205" fill="none" stroke="#d97706" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+
+  <!-- Smile -->
+  <path d="M 185 224 Q 200 236 215 224" fill="none" stroke="#991b1b" stroke-width="3" stroke-linecap="round" />
+
+  <!-- Floating Tech Badge Initials -->
+  <g transform="translate(290, 280)">
+    <circle cx="25" cy="25" r="30" fill="#0f172a" stroke="url(#accentGrad)" stroke-width="2.5" />
+    <text x="25" y="32" font-family="'JetBrains Mono', monospace" font-size="16" font-weight="bold" fill="#38bdf8" text-anchor="middle">RP</text>
+  </g>
+</svg>

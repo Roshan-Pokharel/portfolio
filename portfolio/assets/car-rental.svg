@@ -1,0 +1,132 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 700 500" width="100%" height="100%">
+  <defs>
+    <linearGradient id="crBg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0f172a" />
+      <stop offset="50%" stop-color="#1e1b4b" />
+      <stop offset="100%" stop-color="#0f172a" />
+    </linearGradient>
+    <linearGradient id="phoneGlow" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#6366f1" />
+      <stop offset="100%" stop-color="#a855f7" />
+    </linearGradient>
+    <linearGradient id="cardGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1e293b" />
+      <stop offset="100%" stop-color="#0f172a" />
+    </linearGradient>
+    <linearGradient id="cyanBtn" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#38bdf8" />
+      <stop offset="100%" stop-color="#2563eb" />
+    </linearGradient>
+    <filter id="shadow" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="12" stdDeviation="16" flood-color="#000000" flood-opacity="0.6"/>
+    </filter>
+  </defs>
+
+  <!-- Background -->
+  <rect width="700" height="500" fill="url(#crBg)" />
+  
+  <!-- Subtle Grid Pattern in Background -->
+  <g stroke="#334155" stroke-width="1" opacity="0.15">
+    <line x1="0" y1="100" x2="700" y2="100" />
+    <line x1="0" y1="200" x2="700" y2="200" />
+    <line x1="0" y1="300" x2="700" y2="300" />
+    <line x1="0" y1="400" x2="700" y2="400" />
+    <line x1="100" y1="0" x2="100" y2="500" />
+    <line x1="200" y1="0" x2="200" y2="500" />
+    <line x1="300" y1="0" x2="300" y2="500" />
+    <line x1="400" y1="0" x2="400" y2="500" />
+    <line x1="500" y1="0" x2="500" y2="500" />
+    <line x1="600" y1="0" x2="600" y2="500" />
+  </g>
+
+  <!-- Left Mobile Mockup -->
+  <g transform="translate(140, 45)" filter="url(#shadow)">
+    <!-- Phone Bezel -->
+    <rect x="0" y="0" width="220" height="420" rx="36" fill="#090d16" stroke="#334155" stroke-width="3" />
+    <!-- Phone Screen -->
+    <rect x="6" y="6" width="208" height="408" rx="30" fill="#0f172a" />
+    <!-- Dynamic Island / Notch -->
+    <rect x="75" y="14" width="70" height="18" rx="9" fill="#000000" />
+
+    <!-- App Header -->
+    <text x="22" y="58" font-family="'Inter', sans-serif" font-size="13" font-weight="700" fill="#f8fafc">Explore Cars</text>
+    <circle cx="190" cy="54" r="10" fill="#1e293b" />
+    <circle cx="190" cy="54" r="3.5" fill="#38bdf8" />
+
+    <!-- Filter chips -->
+    <rect x="20" y="74" width="46" height="20" rx="10" fill="url(#cyanBtn)" />
+    <text x="43" y="88" font-family="'Inter', sans-serif" font-size="9" font-weight="600" fill="#ffffff" text-anchor="middle">All</text>
+    <rect x="72" y="74" width="50" height="20" rx="10" fill="#1e293b" />
+    <text x="97" y="88" font-family="'Inter', sans-serif" font-size="9" font-weight="500" fill="#94a3b8" text-anchor="middle">SUV</text>
+    <rect x="128" y="74" width="58" height="20" rx="10" fill="#1e293b" />
+    <text x="157" y="88" font-family="'Inter', sans-serif" font-size="9" font-weight="500" fill="#94a3b8" text-anchor="middle">Sedan</text>
+
+    <!-- Featured Car Card -->
+    <rect x="18" y="106" width="184" height="150" rx="16" fill="url(#cardGrad)" stroke="#334155" stroke-width="1" />
+    <!-- Badge -->
+    <rect x="28" y="116" width="52" height="16" rx="8" fill="#10b981" fill-opacity="0.2" />
+    <text x="54" y="127" font-family="'Inter', sans-serif" font-size="8" font-weight="700" fill="#34d399" text-anchor="middle">AVAILABLE</text>
+    <!-- Car Graphic -->
+    <g transform="translate(38, 140)">
+      <path d="M12 28 Q24 6 52 6 Q78 6 92 18 L126 18 Q138 20 142 30 L144 38 Q144 42 138 44 L6 44 Q0 42 2 34 Z" fill="#38bdf8" />
+      <path d="M30 26 Q40 10 58 10 Q80 10 90 26 Z" fill="#0f172a" />
+      <!-- Windows & lights -->
+      <circle cx="28" cy="42" r="10" fill="#090d16" stroke="#475569" stroke-width="2" />
+      <circle cx="118" cy="42" r="10" fill="#090d16" stroke="#475569" stroke-width="2" />
+    </g>
+    <text x="28" y="218" font-family="'Inter', sans-serif" font-size="12" font-weight="700" fill="#ffffff">Tesla Model 3</text>
+    <text x="28" y="234" font-family="'JetBrains Mono', monospace" font-size="11" font-weight="600" fill="#38bdf8">$65<tspan font-size="8" fill="#94a3b8">/day</tspan></text>
+    <rect x="132" y="215" width="60" height="24" rx="12" fill="url(#cyanBtn)" />
+    <text x="162" y="231" font-family="'Inter', sans-serif" font-size="9" font-weight="700" fill="#ffffff" text-anchor="middle">Book</text>
+
+    <!-- Mini Card 2 -->
+    <rect x="18" y="268" width="184" height="64" rx="14" fill="#1e293b" stroke="#334155" stroke-width="1" />
+    <rect x="28" y="278" width="44" height="44" rx="10" fill="#0f172a" />
+    <path d="M34 304 L42 292 L62 292 L66 304 Z" fill="#818cf8" />
+    <text x="82" y="294" font-family="'Inter', sans-serif" font-size="11" font-weight="600" fill="#ffffff">Hyundai Tucson</text>
+    <text x="82" y="310" font-family="'JetBrains Mono', monospace" font-size="10" fill="#38bdf8">$45<tspan font-size="8" fill="#94a3b8">/day</tspan></text>
+
+    <!-- Bottom Nav -->
+    <line x1="6" y1="375" x2="214" y2="375" stroke="#1e293b" stroke-width="1" />
+    <circle cx="45" cy="392" r="4" fill="#38bdf8" />
+    <circle cx="85" cy="392" r="4" fill="#475569" />
+    <circle cx="130" cy="392" r="4" fill="#475569" />
+    <circle cx="175" cy="392" r="4" fill="#475569" />
+  </g>
+
+  <!-- Right Floating Detail Showcase Card -->
+  <g transform="translate(390, 110)" filter="url(#shadow)">
+    <rect x="0" y="0" width="240" height="280" rx="20" fill="#111827" stroke="#374151" stroke-width="1" />
+    <!-- Header -->
+    <rect x="16" y="16" width="36" height="36" rx="10" fill="url(#phoneGlow)" />
+    <path d="M26 34 L32 24 L40 24 L44 34 Z" fill="white" />
+    <text x="62" y="32" font-family="'Inter', sans-serif" font-size="13" font-weight="700" fill="#f9fafb">React Native App</text>
+    <text x="62" y="47" font-family="'JetBrains Mono', monospace" font-size="10" fill="#9ca3af">iOS &amp; Android</text>
+
+    <line x1="16" y1="68" x2="224" y2="68" stroke="#1f2937" stroke-width="1" />
+
+    <!-- Feature items -->
+    <g transform="translate(20, 84)">
+      <circle cx="8" cy="8" r="6" fill="#10b981" />
+      <path d="M5 8 L7 10 L11 6" stroke="white" stroke-width="1.5" fill="none" stroke-linecap="round" />
+      <text x="24" y="12" font-family="'Inter', sans-serif" font-size="11" font-weight="500" fill="#e5e7eb">Real-time availability</text>
+    </g>
+    <g transform="translate(20, 116)">
+      <circle cx="8" cy="8" r="6" fill="#10b981" />
+      <path d="M5 8 L7 10 L11 6" stroke="white" stroke-width="1.5" fill="none" stroke-linecap="round" />
+      <text x="24" y="12" font-family="'Inter', sans-serif" font-size="11" font-weight="500" fill="#e5e7eb">JWT Auth &amp; Profiles</text>
+    </g>
+    <g transform="translate(20, 148)">
+      <circle cx="8" cy="8" r="6" fill="#10b981" />
+      <path d="M5 8 L7 10 L11 6" stroke="white" stroke-width="1.5" fill="none" stroke-linecap="round" />
+      <text x="24" y="12" font-family="'Inter', sans-serif" font-size="11" font-weight="500" fill="#e5e7eb">Node.js + MongoDB API</text>
+    </g>
+
+    <!-- Stats badge -->
+    <rect x="18" y="196" width="204" height="60" rx="12" fill="#1f2937" />
+    <text x="32" y="222" font-family="'Inter', sans-serif" font-size="10" fill="#9ca3af">Architecture</text>
+    <text x="32" y="242" font-family="'JetBrains Mono', monospace" font-size="13" font-weight="700" fill="#38bdf8">Mobile-First</text>
+    <text x="140" y="222" font-family="'Inter', sans-serif" font-size="10" fill="#9ca3af">Latency</text>
+    <text x="140" y="242" font-family="'JetBrains Mono', monospace" font-size="13" font-weight="700" fill="#10b981">&lt; 100ms</text>
+  </g>
+</svg>

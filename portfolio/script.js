@@ -295,6 +295,44 @@
     let isTyping = false;
     let activeTypingAbort = null;
 
+    // --- Mobile Fullscreen & Virtual Keyboard Viewport Handler ---
+    function updateChatModalViewport() {
+      if (!chatModal || !chatModal.classList.contains('open')) return;
+      const isMobile = window.innerWidth <= 640;
+
+      if (!isMobile) {
+        chatModal.style.removeProperty('--modal-top');
+        chatModal.style.removeProperty('--modal-left');
+        chatModal.style.removeProperty('--modal-height');
+        chatModal.style.removeProperty('--modal-width');
+        chatModal.classList.remove('keyboard-open');
+        return;
+      }
+
+      if (window.visualViewport) {
+        const vp = window.visualViewport;
+        chatModal.style.setProperty('--modal-top', `${vp.offsetTop}px`);
+        chatModal.style.setProperty('--modal-left', `${vp.offsetLeft}px`);
+        chatModal.style.setProperty('--modal-height', `${vp.height}px`);
+        chatModal.style.setProperty('--modal-width', `${vp.width}px`);
+
+        // If visual viewport height is noticeably smaller than screen/window height, virtual keyboard is open
+        const isKeyboardOpen = (window.innerHeight - vp.height) > 120;
+        if (isKeyboardOpen) {
+          chatModal.classList.add('keyboard-open');
+        } else {
+          chatModal.classList.remove('keyboard-open');
+        }
+      } else {
+        chatModal.style.setProperty('--modal-top', '0px');
+        chatModal.style.setProperty('--modal-left', '0px');
+        chatModal.style.setProperty('--modal-height', '100dvh');
+        chatModal.style.setProperty('--modal-width', '100vw');
+      }
+
+      scrollToBottom();
+    }
+
     // --- Modal Open / Close Logic ---
     function openChatModal() {
       if (!chatModal) return;
@@ -306,19 +344,27 @@
       if (chatTriggerCard) {
         chatTriggerCard.setAttribute('aria-expanded', 'true');
       }
+      updateChatModalViewport();
       setTimeout(() => {
         input.focus();
+        updateChatModalViewport();
       }, 120);
       scrollToBottom();
     }
 
     function closeChatModal() {
       if (!chatModal) return;
+      if (input) input.blur();
       if (activeTypingAbort) {
         activeTypingAbort.finish();
       }
       chatModal.classList.remove('open');
+      chatModal.classList.remove('keyboard-open');
       document.body.classList.remove('chat-modal-open');
+      chatModal.style.removeProperty('--modal-top');
+      chatModal.style.removeProperty('--modal-left');
+      chatModal.style.removeProperty('--modal-height');
+      chatModal.style.removeProperty('--modal-width');
       if (chatTriggerCard) {
         chatTriggerCard.setAttribute('aria-expanded', 'false');
       }
@@ -875,6 +921,39 @@
         input.focus();
       });
     }
+
+    // --- Mobile Virtual Keyboard & Viewport Observers ---
+    input.addEventListener('focus', () => {
+      if (window.innerWidth <= 640) {
+        updateChatModalViewport();
+        setTimeout(updateChatModalViewport, 80);
+        setTimeout(updateChatModalViewport, 200);
+        setTimeout(updateChatModalViewport, 350);
+        setTimeout(() => {
+          scrollToBottom();
+          try {
+            input.scrollIntoView({ block: 'nearest', inline: 'nearest' });
+          } catch (e) {}
+        }, 360);
+      }
+    });
+
+    input.addEventListener('blur', () => {
+      if (window.innerWidth <= 640) {
+        setTimeout(updateChatModalViewport, 100);
+        setTimeout(updateChatModalViewport, 250);
+      }
+    });
+
+    if (window.visualViewport) {
+      window.visualViewport.addEventListener('resize', updateChatModalViewport);
+      window.visualViewport.addEventListener('scroll', updateChatModalViewport);
+    }
+    window.addEventListener('resize', () => {
+      if (chatModal && chatModal.classList.contains('open')) {
+        updateChatModalViewport();
+      }
+    });
 
     // Load persisted chat history on startup (valid for 1 day)
     if (!loadChatHistory()) {
